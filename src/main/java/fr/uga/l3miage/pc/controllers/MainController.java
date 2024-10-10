@@ -30,4 +30,9 @@ public class MainController implements MainEndpoints {
         return new Tour[0]; // TODO
     }
 
+    @Override
+    public int getLongueurHistorique(int idPartie){
+        return gestionDesPartiesService.obtenirNbToursPartie(idPartie);
+    }
+
 }

@@ -44,4 +44,8 @@ public class GestionDesPartiesService {
             throw new JoueurADejaJoueRestException(e.getMessage());
         }
     }
+
+    public int obtenirNbToursPartie(int numeroPartie){
+        return partiesEnCours.get(numeroPartie).getNbTours();
+    }
 }

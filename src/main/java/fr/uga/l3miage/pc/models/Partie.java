@@ -34,6 +34,9 @@ public class Partie {
         return historique;
     }
 
+    public Tour[] getHistorique(){return historique;}
+    public int getIndexTourEnCours(){return indexTourEnCours;}
+
     public void jeuAutomatique(EnumTechniquesAuto technique) {
         // TODO implement here
     }

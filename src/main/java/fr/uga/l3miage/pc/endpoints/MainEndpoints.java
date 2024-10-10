@@ -32,4 +32,11 @@ public interface MainEndpoints {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{idPartie}/historique")
     Tour[] getHistorique(@PathVariable(name = "idPartie") int idPartie);
+
+    @Operation(description = "Récupérer la longueur d'une partie")
+    @ApiResponse(responseCode = "200",description = "Le nombre de coups dans la partie")
+    @ApiResponse(responseCode = "404", description = "Partie inconnue")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{idPartie}/longueur")
+    int getLongueurHistorique(@PathVariable(name = "idPartie") int idPartie);
 }
