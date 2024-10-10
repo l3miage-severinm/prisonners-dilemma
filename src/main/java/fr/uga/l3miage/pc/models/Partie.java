@@ -30,7 +30,10 @@ public class Partie {
             historique[indexTourEnCours].setJoueur1Coopere(coopere);
         else
             historique[indexTourEnCours].setJoueur2Coopere(coopere);
-        historique[++indexTourEnCours] = new Tour();
+
+        if (historique[indexTourEnCours].estFini())
+            historique[++indexTourEnCours] = new Tour();
+
         return historique;
     }
 
