@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.prisonersdilemma;
+package fr.uga.l3miage.pc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
