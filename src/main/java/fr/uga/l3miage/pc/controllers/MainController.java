@@ -1,39 +1,33 @@
 package fr.uga.l3miage.pc.controllers;
 
-import fr.uga.l3miage.pc.exceptions.JoueurADejaJoueRestException;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
 import fr.uga.l3miage.pc.models.Tour;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.uga.l3miage.pc.endpoints.MainEndpoints;
-import fr.uga.l3miage.pc.services.GestionDesParties;
+import fr.uga.l3miage.pc.services.GestionDesPartiesService;
 
 @RestController
 public class MainController implements MainEndpoints {
 
-    private GestionDesParties gestionDesParties;
-
-    public MainController() {
-        gestionDesParties = GestionDesParties.getInstance();
-    }
+    @Autowired
+    private GestionDesPartiesService gestionDesPartiesService;
 
     @Override
-    public int creerPartie(int nbTours) {
-        return gestionDesParties.creerPartie(nbTours);
+    public int creerPartie(int nbTours) throws PartieNbToursIncorrectRestException {
+        return gestionDesPartiesService.creerPartie(nbTours);
     }
 
     @Override
     public Tour[] jouerCoup(int idPartie, int idJoueur, boolean coup) {
-        try {
-            return gestionDesParties.jouerCoup(idPartie, EnumIdJoueur.values()[idJoueur], coup);
-        } catch (Exception e) {
-            throw new JoueurADejaJoueRestException(e.getMessage());
-        }
+        return gestionDesPartiesService.jouerCoup(idPartie, EnumIdJoueur.values()[idJoueur], coup);
     }
 
     @Override
     public Tour[] getHistorique(int idPartie) {
-        return null;
+        return new Tour[0]; // TODO
     }
 
 }
