@@ -40,7 +40,7 @@ public class PartieComponent {
         List<Tour> tours = getPartieByNumero(numeroPartie).getTours();
         Tour tourActuel = tours.get(tours.size() - 1);
 
-        if (idJoueur == EnumIdJoueur.UN) {
+        if (idJoueur == EnumIdJoueur.TINTIN) {
             if (tourActuel.joueur1AJoue())
                 throw new JoueurADejaJoueException("Joueur 1 a déjà joué");
             tourActuel.setJoueur1Coopere(coopere);

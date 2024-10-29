@@ -2,13 +2,11 @@ package fr.uga.l3miage.pc.prisonersdilemma.services;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.exceptions.rest.JoueurADejaJoueRestException;
-import fr.uga.l3miage.pc.exceptions.rest.PartieInexistanteRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
 import fr.uga.l3miage.pc.services.GestionDesPartiesService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -41,8 +39,8 @@ class GestionDesPartiesServiceTest {
     @Test
     void jouerCoupDejaJoueTest() {
         int numeroPartie = gestionDesPartiesService.creerPartie(2);
-        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.UN, true);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true);
         assertThrows(JoueurADejaJoueRestException.class,
-                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.UN, false));
+                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, false));
     }
 }
