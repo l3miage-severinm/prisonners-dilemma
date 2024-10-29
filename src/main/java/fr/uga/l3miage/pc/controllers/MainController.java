@@ -21,7 +21,7 @@ public class MainController implements MainEndpoints {
     }
 
     @Override
-    public Tour[] jouerCoup(int idPartie, int idJoueur, boolean coup) {
+    public Tour jouerCoup(int idPartie, int idJoueur, boolean coup) {
         return gestionDesPartiesService.jouerCoup(idPartie, EnumIdJoueur.values()[idJoueur], coup);
     }
 
