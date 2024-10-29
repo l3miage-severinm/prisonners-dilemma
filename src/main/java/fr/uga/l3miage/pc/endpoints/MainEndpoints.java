@@ -12,13 +12,14 @@ public interface MainEndpoints {
 
     @Operation(description = "Créer une partie (2 joueurs) de dilemne du prisonnier")
     @ApiResponse(responseCode = "200", description = "Partie créée")
+    @ApiResponse(responseCode = "400", description = "Nombre de tours incorrect")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/creer-partie/{nbTours}")
     int creerPartie(@PathVariable(name = "nbTours") int nbTours);
 
     @Operation(description = "Jouer un coup pour une partie donnée")
     @ApiResponse(responseCode = "200",description = "Le coup a été joué")
-    @ApiResponse(responseCode = "404", description = "Partie inconnue")
+    @ApiResponse(responseCode = "400", description = "Partie inconnue ou coup déjà joué")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{idPartie}/jouer/{idJoueur}/{coopere}")
     Tour jouerCoup(@PathVariable(name = "idPartie") int idPartie, @PathVariable(name = "idJoueur") int idJoueur, @PathVariable(name = "coopere") boolean coopere);
