@@ -54,7 +54,7 @@ public class PartieComponent {
         if (tourActuel.estFini())
             tours.add(new Tour());
 
-        return tours.get(partiesEnCours.size() - 1);
+        return tours.get(tours.size() - 1);
     }
 
     public Partie getPartieByNumero(int numero) throws  PartieInexistanteException {
