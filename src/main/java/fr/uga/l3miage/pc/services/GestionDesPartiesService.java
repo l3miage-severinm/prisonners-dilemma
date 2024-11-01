@@ -38,6 +38,19 @@ public class GestionDesPartiesService {
         }
     }
 
+    public void deletePartie(int numero) {
+        try {
+            partieComponent.deletePartie(numero);
+        }
+        catch (PartieInexistanteException e) {
+            throw new PartieInexistanteRestException(e.getMessage());
+        }
+    }
+
+    public void clearPartiesEnCours() {
+        partieComponent.clearPartiesEnCours();
+    }
+
     public int obtenirNbToursPartie(int numeroPartie){
         try {
             return partieComponent.getPartieByNumero(numeroPartie).getNbTours();
