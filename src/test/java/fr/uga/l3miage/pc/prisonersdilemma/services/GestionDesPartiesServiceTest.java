@@ -4,6 +4,7 @@ import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.exceptions.rest.JoueurADejaJoueRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieInexistanteRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
+import fr.uga.l3miage.pc.exceptions.rest.PartieTermineeRestException;
 import fr.uga.l3miage.pc.services.GestionDesPartiesService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -48,5 +49,16 @@ class GestionDesPartiesServiceTest {
         gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true);
         assertThrows(JoueurADejaJoueRestException.class,
                 () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, false));
+    }
+
+    @Test
+    void jouerCoupPartieTermineeTest() {
+        int numeroPartie = gestionDesPartiesService.creerPartie(1);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, true);
+        assertThrows(
+                PartieTermineeRestException.class,
+                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true)
+        );
     }
 }

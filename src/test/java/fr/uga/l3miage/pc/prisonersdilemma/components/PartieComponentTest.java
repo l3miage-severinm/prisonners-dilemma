@@ -5,6 +5,7 @@ import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
 import fr.uga.l3miage.pc.components.PartieComponent;
+import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
 import fr.uga.l3miage.pc.models.Tour;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -86,6 +87,31 @@ public class PartieComponentTest {
         assertThrows(
                 JoueurADejaJoueException.class,
                 () -> partieComponent.jouerCoup(numeroPartie, idJoueur, coopere)
+        );
+    }
+
+    @Test
+    void jouerCoupDernierCoupTest()
+            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException {
+        final boolean coopereTintin = true;
+        final boolean coopereMilou = false;
+        final int numeroPartie = partieComponent.creerPartie(1);
+        Tour tourAfterCoup1 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, coopereTintin);
+        Tour tourAfterCoup2 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, coopereMilou);
+        assertThat(tourAfterCoup2).isSameAs(tourAfterCoup1);
+        assertThat(tourAfterCoup2.getJoueur1Coopere()).isEqualTo(coopereTintin);
+        assertThat(tourAfterCoup2.getJoueur2Coopere()).isEqualTo(coopereMilou);
+    }
+
+    @Test
+    void jouerCoupPartieTermineeTest()
+            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException {
+        final int numeroPartie = partieComponent.creerPartie(1);
+        partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true);
+        partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, false);
+        assertThrows(
+                PartieTermineeException.class,
+                () -> partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true)
         );
     }
 }
