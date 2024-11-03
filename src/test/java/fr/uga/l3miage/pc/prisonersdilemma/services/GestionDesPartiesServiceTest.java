@@ -35,7 +35,7 @@ class GestionDesPartiesServiceTest {
     @Test
     void creePartieNbTours1Test() {
         int numeroPartie = gestionDesPartiesService.creerPartie(1);
-        assertThat(numeroPartie >= 0).isTrue();
+        assertThat(numeroPartie).isNotNegative();
     }
 
     @Test

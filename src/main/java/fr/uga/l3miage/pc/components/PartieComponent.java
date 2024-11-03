@@ -49,7 +49,7 @@ public class PartieComponent {
         Tour tourActuel = tours.get(tours.size() - 1);
 
         SimpleStrategy strategie = FabriqueStrategie.getInstance().createStrategie(technique);
-        Tour[] historique = tours.stream().limit(tours.size() - 1).toArray(Tour[]::new); // Ignore current Tour
+        Tour[] historique = tours.stream().limit(tours.size() - (long)1).toArray(Tour[]::new); // Ignore current Tour
         boolean coup = strategie.doStrategy(historique, idJoueur);
 
         if (idJoueur == EnumIdJoueur.TINTIN) {

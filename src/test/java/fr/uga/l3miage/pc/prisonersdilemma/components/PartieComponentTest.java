@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-public class PartieComponentTest {
+class PartieComponentTest {
 
     @Autowired
     private PartieComponent partieComponent;
@@ -30,7 +30,7 @@ public class PartieComponentTest {
     @Test
     void creerPartieTest() throws PartieNbToursIncorrectException {
         final int numeroPartie = partieComponent.creerPartie(3);
-        assertThat(numeroPartie).isGreaterThanOrEqualTo(0);
+        assertThat(numeroPartie).isNotNegative();
     }
 
     @Test
@@ -47,14 +47,14 @@ public class PartieComponentTest {
 
         Tour tourAfterCoup1 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP);
         assertThat(tourAfterCoup1.getJoueur1Coopere()).isEqualTo(coopereTintin);
-        assertThat(tourAfterCoup1.getJoueur2Coopere()).isEqualTo(null);
+        assertThat(tourAfterCoup1.getJoueur2Coopere()).isNull();
 
         Tour tourAfterCoup2 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumTechniquesAuto.TJRS_TRAHIR);
         assertThat(tourAfterCoup2).isNotSameAs(tourAfterCoup1);
         assertThat(tourAfterCoup1.getJoueur1Coopere()).isEqualTo(coopereTintin);
         assertThat(tourAfterCoup1.getJoueur2Coopere()).isEqualTo(coopereMilou);
-        assertThat(tourAfterCoup2.getJoueur1Coopere()).isEqualTo(null);
-        assertThat(tourAfterCoup2.getJoueur2Coopere()).isEqualTo(null);
+        assertThat(tourAfterCoup2.getJoueur1Coopere()).isNull();
+        assertThat(tourAfterCoup2.getJoueur2Coopere()).isNull();
     }
 
     @Test
@@ -96,8 +96,8 @@ public class PartieComponentTest {
         Tour tourAfterCoup1 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP);
         Tour tourAfterCoup2 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumTechniquesAuto.TJRS_TRAHIR);
         assertThat(tourAfterCoup2).isSameAs(tourAfterCoup1);
-        assertThat(tourAfterCoup2.getJoueur1Coopere()).isEqualTo(true);
-        assertThat(tourAfterCoup2.getJoueur2Coopere()).isEqualTo(false);
+        assertThat(tourAfterCoup2.getJoueur1Coopere()).isTrue();
+        assertThat(tourAfterCoup2.getJoueur2Coopere()).isFalse();
     }
 
     @Test
