@@ -1,6 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.services;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
 import fr.uga.l3miage.pc.exceptions.rest.JoueurADejaJoueRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieInexistanteRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
@@ -40,25 +41,25 @@ class GestionDesPartiesServiceTest {
     @Test
     void jouerCoupPartieInexistanteTest() {
         assertThrows(PartieInexistanteRestException.class,
-                () -> gestionDesPartiesService.jouerCoup(0, EnumIdJoueur.TINTIN, true));
+                () -> gestionDesPartiesService.jouerCoup(0, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP));
     }
 
     @Test
     void jouerCoupDejaJoueTest() {
         int numeroPartie = gestionDesPartiesService.creerPartie(2);
-        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP);
         assertThrows(JoueurADejaJoueRestException.class,
-                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, false));
+                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_TRAHIR));
     }
 
     @Test
     void jouerCoupPartieTermineeTest() {
         int numeroPartie = gestionDesPartiesService.creerPartie(1);
-        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true);
-        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, true);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumTechniquesAuto.TJRS_COOP);
         assertThrows(
                 PartieTermineeRestException.class,
-                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true)
+                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP)
         );
     }
 }

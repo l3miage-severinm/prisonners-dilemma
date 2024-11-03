@@ -2,6 +2,7 @@ package fr.uga.l3miage.pc.services;
 
 import fr.uga.l3miage.pc.components.PartieComponent;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
 import fr.uga.l3miage.pc.exceptions.rest.JoueurADejaJoueRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieInexistanteRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
@@ -28,9 +29,10 @@ public class GestionDesPartiesService {
         }
     }
 
-    public Tour jouerCoup (int numeroPartie, EnumIdJoueur idJoueur, boolean coopere) {
+    public Tour jouerCoup (int numeroPartie, EnumIdJoueur idJoueur, EnumTechniquesAuto strategie) {
+        // Implement a DTO to indicate index of current tour in the partie and total number of tours
         try {
-            return partieComponent.jouerCoup(numeroPartie, idJoueur, coopere);
+            return partieComponent.jouerCoup(numeroPartie, idJoueur, strategie);
         }
         catch (PartieInexistanteException e) {
             throw new PartieInexistanteRestException(e.getMessage());

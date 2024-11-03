@@ -6,8 +6,10 @@ import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
+import fr.uga.l3miage.pc.interfaces.SimpleStrategy;
 import fr.uga.l3miage.pc.models.Partie;
 import fr.uga.l3miage.pc.models.Tour;
+import fr.uga.l3miage.pc.models.strategies.FabriqueStrategie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +37,7 @@ public class PartieComponent {
         return p.getNumero();
     }
 
-    public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, boolean coopere)
+    public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, EnumTechniquesAuto technique)
             throws PartieInexistanteException, JoueurADejaJoueException, PartieTermineeException {
 
         Partie partie = getPartieByNumero(numeroPartie);
@@ -46,15 +48,19 @@ public class PartieComponent {
         List<Tour> tours = partie.getTours();
         Tour tourActuel = tours.get(tours.size() - 1);
 
+        SimpleStrategy strategie = FabriqueStrategie.getInstance().createStrategie(technique);
+        Tour[] historique = tours.stream().limit(tours.size() - 1).toArray(Tour[]::new); // Ignore current Tour
+        boolean coup = strategie.doStrategy(historique, idJoueur);
+
         if (idJoueur == EnumIdJoueur.TINTIN) {
             if (tourActuel.joueur1AJoue())
                 throw new JoueurADejaJoueException("Joueur 1 a déjà joué");
-            tourActuel.setJoueur1Coopere(coopere);
+            tourActuel.setJoueur1Coopere(coup);
         }
         else {
             if (tourActuel.joueur2AJoue())
                 throw new JoueurADejaJoueException("Joueur 2 a déjà joué");
-            tourActuel.setJoueur2Coopere(coopere);
+            tourActuel.setJoueur2Coopere(coup);
         }
 
         if (!partie.estFinie() && tourActuel.estFini())
@@ -78,9 +84,5 @@ public class PartieComponent {
 
     public void clearPartiesEnCours() {
         partiesEnCours.clear();
-    }
-
-    public void jeuAutomatique(EnumTechniquesAuto technique) {
-        // TODO implement here
     }
 }
