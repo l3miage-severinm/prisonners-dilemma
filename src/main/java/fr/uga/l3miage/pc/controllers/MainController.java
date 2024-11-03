@@ -28,7 +28,7 @@ public class MainController implements MainEndpoints {
 
     @Override
     public Tour[] getHistorique(int idPartie) {
-        return new Tour[0]; // TODO
+        return new Tour[0];
     }
 
     @Override

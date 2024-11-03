@@ -30,7 +30,6 @@ public class GestionDesPartiesService {
     }
 
     public Tour jouerCoup (int numeroPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
-        // Implement a DTO to indicate index of current tour in the partie and total number of tours
         try {
             return partieComponent.jouerCoup(numeroPartie, idJoueur, strategie);
         }
