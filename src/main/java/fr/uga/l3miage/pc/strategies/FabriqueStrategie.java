@@ -1,6 +1,6 @@
 package fr.uga.l3miage.pc.strategies;
 
-import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
+import fr.uga.l3miage.pc.enums.EnumStrategie;
 
 public class FabriqueStrategie {
 
@@ -15,13 +15,13 @@ public class FabriqueStrategie {
         return instance;
     }
 
-    public SimpleStrategy createStrategie(EnumTechniquesAuto techniqueAuto) {
+    public SimpleStrategy createStrategie(EnumStrategie techniqueAuto) {
         return switch (techniqueAuto) {
             case DONNANT_DONNANT -> new DonnantDonnant();
             case DONNANT_DONNANT_ALEATOIRE -> new DonnantDonnantAleatoire();
             case SONDEUR_NAIF -> new SondeurNaif();
-            case TJRS_COOP -> new ToujoursCooperer();
-            case TJRS_TRAHIR -> new ToujoursTrahir();
+            case COOPERER -> new Cooperer();
+            case TRAHIR -> new Trahir();
             default -> null;
         };
     }

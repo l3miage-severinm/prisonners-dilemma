@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.components;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
+import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
@@ -45,11 +45,11 @@ class PartieComponentTest {
         final boolean coopereTintin = true;
         final boolean coopereMilou = false;
 
-        Tour tourAfterCoup1 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP);
+        Tour tourAfterCoup1 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER);
         assertThat(tourAfterCoup1.getJoueur1Coopere()).isEqualTo(coopereTintin);
         assertThat(tourAfterCoup1.getJoueur2Coopere()).isNull();
 
-        Tour tourAfterCoup2 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumTechniquesAuto.TJRS_TRAHIR);
+        Tour tourAfterCoup2 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumStrategie.TRAHIR);
         assertThat(tourAfterCoup2).isNotSameAs(tourAfterCoup1);
         assertThat(tourAfterCoup1.getJoueur1Coopere()).isEqualTo(coopereTintin);
         assertThat(tourAfterCoup1.getJoueur2Coopere()).isEqualTo(coopereMilou);
@@ -61,7 +61,7 @@ class PartieComponentTest {
     void jouerCoupPartieInexistanteTest() {
         assertThrows(
                 PartieInexistanteException.class,
-                () -> partieComponent.jouerCoup(0, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP)
+                () -> partieComponent.jouerCoup(0, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER)
         );
     }
 
@@ -70,10 +70,10 @@ class PartieComponentTest {
             throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final EnumIdJoueur idJoueur = EnumIdJoueur.TINTIN;
         final int numeroPartie = partieComponent.creerPartie(3);
-        partieComponent.jouerCoup(numeroPartie, idJoueur, EnumTechniquesAuto.TJRS_COOP);
+        partieComponent.jouerCoup(numeroPartie, idJoueur, EnumStrategie.COOPERER);
         assertThrows(
                 JoueurADejaJoueException.class,
-                () -> partieComponent.jouerCoup(numeroPartie, idJoueur, EnumTechniquesAuto.TJRS_TRAHIR)
+                () -> partieComponent.jouerCoup(numeroPartie, idJoueur, EnumStrategie.TRAHIR)
         );
     }
 
@@ -82,10 +82,10 @@ class PartieComponentTest {
             throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final EnumIdJoueur idJoueur = EnumIdJoueur.MILOU;
         final int numeroPartie = partieComponent.creerPartie(3);
-        partieComponent.jouerCoup(numeroPartie, idJoueur, EnumTechniquesAuto.TJRS_COOP);
+        partieComponent.jouerCoup(numeroPartie, idJoueur, EnumStrategie.COOPERER);
         assertThrows(
                 JoueurADejaJoueException.class,
-                () -> partieComponent.jouerCoup(numeroPartie, idJoueur, EnumTechniquesAuto.TJRS_TRAHIR)
+                () -> partieComponent.jouerCoup(numeroPartie, idJoueur, EnumStrategie.TRAHIR)
         );
     }
 
@@ -93,8 +93,8 @@ class PartieComponentTest {
     void jouerCoupDernierCoupTest()
             throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final int numeroPartie = partieComponent.creerPartie(1);
-        Tour tourAfterCoup1 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP);
-        Tour tourAfterCoup2 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumTechniquesAuto.TJRS_TRAHIR);
+        Tour tourAfterCoup1 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER);
+        Tour tourAfterCoup2 = partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumStrategie.TRAHIR);
         assertThat(tourAfterCoup2).isSameAs(tourAfterCoup1);
         assertThat(tourAfterCoup2.getJoueur1Coopere()).isTrue();
         assertThat(tourAfterCoup2.getJoueur2Coopere()).isFalse();
@@ -104,11 +104,11 @@ class PartieComponentTest {
     void jouerCoupPartieTermineeTest()
             throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final int numeroPartie = partieComponent.creerPartie(1);
-        partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP);
-        partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumTechniquesAuto.TJRS_COOP);
+        partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER);
+        partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumStrategie.COOPERER);
         assertThrows(
                 PartieTermineeException.class,
-                () -> partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumTechniquesAuto.TJRS_COOP)
+                () -> partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER)
         );
     }
 }

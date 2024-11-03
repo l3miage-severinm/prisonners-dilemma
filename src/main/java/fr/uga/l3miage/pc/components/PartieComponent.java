@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.components;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
+import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
@@ -37,7 +37,7 @@ public class PartieComponent {
         return p.getNumero();
     }
 
-    public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, EnumTechniquesAuto technique)
+    public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, EnumStrategie technique)
             throws PartieInexistanteException, JoueurADejaJoueException, PartieTermineeException {
 
         Partie partie = getPartieByNumero(numeroPartie);

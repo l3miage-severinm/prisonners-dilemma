@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.controllers;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
+import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
 import fr.uga.l3miage.pc.models.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class MainController implements MainEndpoints {
     }
 
     @Override
-    public Tour jouerCoup(int idPartie, EnumIdJoueur idJoueur, EnumTechniquesAuto strategie) {
+    public Tour jouerCoup(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
         return gestionDesPartiesService.jouerCoup(idPartie, idJoueur, strategie);
     }
 
