@@ -78,10 +78,6 @@ public class PartieComponent {
         return partieOptional.get();
     }
 
-//    public void deletePartie(int numero) throws PartieInexistanteException {
-//        partiesEnCours.remove(getPartieByNumero(numero));
-//    }
-
     public void clearPartiesEnCours() {
         partiesEnCours.clear();
     }
