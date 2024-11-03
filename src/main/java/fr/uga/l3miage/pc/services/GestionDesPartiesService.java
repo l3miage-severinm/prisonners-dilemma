@@ -5,9 +5,11 @@ import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.exceptions.rest.JoueurADejaJoueRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieInexistanteRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
+import fr.uga.l3miage.pc.exceptions.rest.PartieTermineeRestException;
 import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
+import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
 import fr.uga.l3miage.pc.models.Tour;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,9 @@ public class GestionDesPartiesService {
         }
         catch (JoueurADejaJoueException e) {
             throw new JoueurADejaJoueRestException(e.getMessage());
+        }
+        catch (PartieTermineeException e) {
+            throw new PartieTermineeRestException(e.getMessage());
         }
     }
 

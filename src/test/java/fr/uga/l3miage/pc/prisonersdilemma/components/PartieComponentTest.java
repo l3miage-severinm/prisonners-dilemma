@@ -39,7 +39,7 @@ public class PartieComponentTest {
 
     @Test
     void jouerCoupTest()
-            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException {
+            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final int numeroPartie = partieComponent.creerPartie(3);
         final boolean coopereTintin = true;
         final boolean coopereMilou = false;
@@ -66,7 +66,7 @@ public class PartieComponentTest {
 
     @Test
     void jouerCoupTintinADejaJoueTest()
-            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException {
+            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final EnumIdJoueur idJoueur = EnumIdJoueur.TINTIN;
         final boolean coopere = true;
         final int numeroPartie = partieComponent.creerPartie(3);
@@ -79,7 +79,7 @@ public class PartieComponentTest {
 
     @Test
     void jouerCoupMilouADejaJoueTest()
-            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException {
+            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final EnumIdJoueur idJoueur = EnumIdJoueur.MILOU;
         final boolean coopere = true;
         final int numeroPartie = partieComponent.creerPartie(3);
@@ -92,7 +92,7 @@ public class PartieComponentTest {
 
     @Test
     void jouerCoupDernierCoupTest()
-            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException {
+            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final boolean coopereTintin = true;
         final boolean coopereMilou = false;
         final int numeroPartie = partieComponent.creerPartie(1);
@@ -105,7 +105,7 @@ public class PartieComponentTest {
 
     @Test
     void jouerCoupPartieTermineeTest()
-            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException {
+            throws PartieNbToursIncorrectException, JoueurADejaJoueException, PartieInexistanteException, PartieTermineeException {
         final int numeroPartie = partieComponent.creerPartie(1);
         partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true);
         partieComponent.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, false);

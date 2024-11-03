@@ -5,6 +5,7 @@ import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
 import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
+import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
 import fr.uga.l3miage.pc.models.Partie;
 import fr.uga.l3miage.pc.models.Tour;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,14 @@ public class PartieComponent {
     }
 
     public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, boolean coopere)
-            throws PartieInexistanteException, JoueurADejaJoueException {
+            throws PartieInexistanteException, JoueurADejaJoueException, PartieTermineeException {
 
-        List<Tour> tours = getPartieByNumero(numeroPartie).getTours();
+        Partie partie = getPartieByNumero(numeroPartie);
+
+        if (partie.estFinie())
+            throw new PartieTermineeException("La partie n°" + numeroPartie + " est terminée");
+
+        List<Tour> tours = partie.getTours();
         Tour tourActuel = tours.get(tours.size() - 1);
 
         if (idJoueur == EnumIdJoueur.TINTIN) {
@@ -51,7 +57,7 @@ public class PartieComponent {
             tourActuel.setJoueur2Coopere(coopere);
         }
 
-        if (tourActuel.estFini())
+        if (!partie.estFinie() && tourActuel.estFini())
             tours.add(new Tour());
 
         return tours.get(tours.size() - 1);
