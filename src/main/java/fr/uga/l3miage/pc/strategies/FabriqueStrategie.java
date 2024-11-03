@@ -17,12 +17,24 @@ public class FabriqueStrategie {
 
     public SimpleStrategy createStrategie(EnumStrategie techniqueAuto) {
         return switch (techniqueAuto) {
-            case DONNANT_DONNANT -> new DonnantDonnant();
-            case DONNANT_DONNANT_ALEATOIRE -> new DonnantDonnantAleatoire();
-            case SONDEUR_NAIF -> new SondeurNaif();
             case COOPERER -> new Cooperer();
             case TRAHIR -> new Trahir();
-            default -> null;
+            case DONNANT_DONNANT -> new DonnantDonnant();
+            case DONNANT_DONNANT_ALEATOIRE -> new DonnantDonnantAleatoire();
+            case DONNANT_POUR_2_DONNANTS -> new DonnantPour2Donnants();
+            case DONNANT_POUR_2_DONNANTS_ET_ALEATOIRE -> new DonnantPour2DonnantsEtAleatoire();
+            case SONDEUR_NAIF -> new SondeurNaif();
+            case SONDEUR_REPENTANT -> new SondeurRepentant();
+            case PACIFICATEUR_NAIF -> new PacificateurNaif();
+            case PACIFICATEUR -> new Pacificateur();
+            case ALEATOIRE -> new Aleatoire();
+            case RANCUNIER -> new Rancunier();
+            case PAVLOV -> new Pavlov();
+            case PAVLOV_ALEATOIRE -> new PavlovAleatoire();
+            case ADAPTATIF -> new Adaptatif();
+            case GRADUEL -> new Graduel();
+            case DONNANT_DONNANT_SOUPCONNEUX -> new DonnantDonnantSoupconneux();
+            case RANCUNIER_DOUX -> new RancunierDoux();
         };
     }
 }
