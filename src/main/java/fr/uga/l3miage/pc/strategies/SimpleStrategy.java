@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.interfaces;
+package fr.uga.l3miage.pc.strategies;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.models.Tour;

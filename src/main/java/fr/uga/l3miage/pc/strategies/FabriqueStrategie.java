@@ -1,6 +1,5 @@
-package fr.uga.l3miage.pc.models.strategies;
+package fr.uga.l3miage.pc.strategies;
 
-import fr.uga.l3miage.pc.interfaces.SimpleStrategy;
 import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
 
 public class FabriqueStrategie {

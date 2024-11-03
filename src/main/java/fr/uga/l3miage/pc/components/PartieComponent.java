@@ -6,10 +6,10 @@ import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
 import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
-import fr.uga.l3miage.pc.interfaces.SimpleStrategy;
+import fr.uga.l3miage.pc.strategies.SimpleStrategy;
 import fr.uga.l3miage.pc.models.Partie;
 import fr.uga.l3miage.pc.models.Tour;
-import fr.uga.l3miage.pc.models.strategies.FabriqueStrategie;
+import fr.uga.l3miage.pc.strategies.FabriqueStrategie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
