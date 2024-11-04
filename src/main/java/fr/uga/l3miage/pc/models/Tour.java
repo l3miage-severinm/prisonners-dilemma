@@ -1,8 +1,12 @@
 package fr.uga.l3miage.pc.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tour {
     private Boolean joueur1Coopere;
     private Boolean joueur2Coopere;
