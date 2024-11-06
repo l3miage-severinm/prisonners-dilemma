@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/dilemne-du-prisonnier")
+@CrossOrigin
 public interface MainEndpoints {
 
     @Operation(description = "Créer une partie (2 joueurs) de dilemne du prisonnier")
