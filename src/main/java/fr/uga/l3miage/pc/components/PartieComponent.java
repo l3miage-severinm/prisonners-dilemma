@@ -23,7 +23,7 @@ import java.util.Set;
 public class PartieComponent {
 
     private final Set<Partie> partiesEnCours;
-    private int numeroPartieSuivante = 0;
+    private int numeroPartieSuivante = 1;
 
     public int creerPartie(int nbTours) throws PartieNbToursIncorrectException {
 

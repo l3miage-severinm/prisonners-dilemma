@@ -32,6 +32,18 @@
             <version>3.3.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <version>3.2.4</version>
+        </dependency>
+
+
         <!-- JUnit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

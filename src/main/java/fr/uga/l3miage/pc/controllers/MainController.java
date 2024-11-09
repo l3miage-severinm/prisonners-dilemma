@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.uga.l3miage.pc.endpoints.MainEndpoints;
 import fr.uga.l3miage.pc.services.GestionDesPartiesService;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class MainController implements MainEndpoints {
@@ -27,13 +31,40 @@ public class MainController implements MainEndpoints {
     }
 
     @Override
-    public Tour[] getHistorique(int idPartie) {
-        return new Tour[0];
-    }
-
-    @Override
     public int getLongueurHistorique(int idPartie){
         return gestionDesPartiesService.obtenirNbToursPartie(idPartie);
     }
 
+    @Override
+    public SseEmitter getHistorique(int idPartie) {
+
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        gestionDesPartiesService.obtenirFluxHistoriquePartie(idPartie)
+                .doOnNext(historique -> {
+                    try {
+                        emitter.send(historique);
+                    } catch (Exception e) {
+                        emitter.completeWithError(e);
+                    }
+                })
+                .subscribe();
+
+        sendHeartbeats(emitter);
+        return emitter;
+    }
+
+    private void sendHeartbeats(SseEmitter emitter) {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Map<String, Boolean> heartbeat = new HashMap<>();
+                    heartbeat.put("heartbeat", true);
+                    emitter.send(heartbeat);
+                } catch (Exception e) {
+                    emitter.completeWithError(e);
+                    break;
+                }
+            }
+        }).start();
+    }
 }

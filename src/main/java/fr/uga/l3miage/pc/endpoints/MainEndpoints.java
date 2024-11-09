@@ -6,7 +6,9 @@ import fr.uga.l3miage.pc.models.Tour;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequestMapping("/api/dilemne-du-prisonnier")
@@ -30,12 +32,12 @@ public interface MainEndpoints {
             @PathVariable(name = "idJoueur") EnumIdJoueur idJoueur,
             @PathVariable(name = "strategie") EnumStrategie strategie);
 
-    @Operation(description = "Récupérer l'historique d'une partie")
-    @ApiResponse(responseCode = "200",description = "L'historique des coups de la partie")
-    @ApiResponse(responseCode = "404", description = "Partie inconnue")
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{idPartie}/historique")
-    Tour[] getHistorique(@PathVariable(name = "idPartie") int idPartie);
+    //@Operation(description = "Récupérer l'historique d'une partie")
+    //@ApiResponse(responseCode = "200",description = "L'historique des coups de la partie")
+    //@ApiResponse(responseCode = "404", description = "Partie inconnue")
+    //@ResponseStatus(HttpStatus.OK)
+    //@GetMapping("/{idPartie}/historique")
+    //Tour[] getHistorique(@PathVariable(name = "idPartie") int idPartie);
 
     @Operation(description = "Récupérer la longueur d'une partie")
     @ApiResponse(responseCode = "200",description = "Le nombre de coups dans la partie")
@@ -43,4 +45,11 @@ public interface MainEndpoints {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{idPartie}/longueur")
     int getLongueurHistorique(@PathVariable(name = "idPartie") int idPartie);
+
+    // Nouvelle méthode SSE pour l'historique en temps réel
+    @Operation(description = "Écouter les mises à jour en temps réel de l'historique de la partie")
+    @ApiResponse(responseCode = "200", description = "Mises à jour SSE envoyées")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/{idPartie}/historique", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    SseEmitter getHistorique(@PathVariable(name = "idPartie") int idPartie);
 }
