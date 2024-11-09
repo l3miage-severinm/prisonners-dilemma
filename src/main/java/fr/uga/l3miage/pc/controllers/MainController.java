@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class MainController implements MainEndpoints {
@@ -41,6 +42,7 @@ public class MainController implements MainEndpoints {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
         gestionDesPartiesService.obtenirFluxHistoriquePartie(idPartie)
                 .doOnNext(historique -> {
+                    System.out.println("Historique envoyé pour la partie " + idPartie + " : " + historique);
                     try {
                         emitter.send(historique);
                     } catch (Exception e) {
@@ -57,6 +59,7 @@ public class MainController implements MainEndpoints {
         new Thread(() -> {
             while (true) {
                 try {
+                    TimeUnit.SECONDS.sleep(5);
                     Map<String, Boolean> heartbeat = new HashMap<>();
                     heartbeat.put("heartbeat", true);
                     emitter.send(heartbeat);
