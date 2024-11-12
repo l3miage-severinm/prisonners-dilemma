@@ -39,15 +39,15 @@ public class SondeurNaifTest {
     void historique1TourTrahir() {
         final int NB_TIRAGE = 10000;
         final Tour[] historique = new Tour[] { new Tour(false, false) };
-        int nbCoopererTintin = 0;
-        int nbCoopererMilou = 0;
+        int nbTrahirTintin = 0;
+        int nbTrahirMilou = 0;
         for (int i = 0; i < NB_TIRAGE; i++) {
             if (!STRATEGIE.doStrategy(historique, EnumIdJoueur.TINTIN))
-                nbCoopererTintin++;
+                nbTrahirTintin++;
             if (!STRATEGIE.doStrategy(historique, EnumIdJoueur.MILOU))
-                nbCoopererMilou++;
+                nbTrahirMilou++;
         }
-        assertThat(nbCoopererTintin).isEqualTo(0);
-        assertThat(nbCoopererMilou).isEqualTo(0);
+        assertThat(nbTrahirTintin).isEqualTo(NB_TIRAGE);
+        assertThat(nbTrahirMilou).isEqualTo(NB_TIRAGE);
     }
 }

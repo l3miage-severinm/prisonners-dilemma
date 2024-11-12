@@ -23,6 +23,6 @@ public class SondeurNaif implements SimpleStrategy {
         if (dernierCoupAdversaireCoopere && random.nextInt(100) >= 50)  // probabilité de trahir de 1/2
             return false;
 
-        return true;
+        return dernierCoupAdversaireCoopere;
     }
 }
