@@ -7,6 +7,9 @@ public class DonnantDonnantSoupconneux implements SimpleStrategy {
 
     @Override
     public boolean doStrategy(Tour[] historique, EnumIdJoueur idJoueur) {
-        return true;
+
+        return (historique.length == 1) ? false : (idJoueur == EnumIdJoueur.TINTIN) ?
+                historique[historique.length - 1].getJoueur2Coopere() :
+                historique[historique.length - 1].getJoueur1Coopere();
     }
 }

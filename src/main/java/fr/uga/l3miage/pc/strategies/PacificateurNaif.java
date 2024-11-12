@@ -7,6 +7,7 @@ public class PacificateurNaif implements SimpleStrategy {
 
     @Override
     public boolean doStrategy(Tour[] historique, EnumIdJoueur idJoueur) {
-        return true;
+
+        return historique.length < 1 || (Math.random() < 0.2)  ? Math.random() < 0.5 : utils.getDernierCoupAdversaire(historique, idJoueur);
     }
 }
