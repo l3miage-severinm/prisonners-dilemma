@@ -3,6 +3,8 @@ package fr.uga.l3miage.pc.strategies;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.models.Tour;
 
+import java.security.SecureRandom;
+
 public class PacificateurNaif implements SimpleStrategy {
 
     @Override
@@ -14,7 +16,7 @@ public class PacificateurNaif implements SimpleStrategy {
 
         boolean dernierCoupAdversaire = utils.getDernierCoupAdversaire(historique, idJoueur);
         if(!dernierCoupAdversaire){
-            return Math.random() < 0.3;
+            return new SecureRandom().nextDouble() < 0.3;
         }
         return dernierCoupAdversaire;
 
