@@ -20,7 +20,7 @@ public class Partie {
     public boolean estFinie() { return tours.size() == nbTours && tours.get(tours.size() - 1).estFini(); }
 
     public boolean estAutomatisee(EnumIdJoueur idJoueur) {
-        return (idJoueur == EnumIdJoueur.TINTIN) ? strategieTintin == null : strategieMilou == null;
+        return (idJoueur == EnumIdJoueur.TINTIN) ? strategieTintin != null : strategieMilou != null;
     }
 
     public int getScore(EnumIdJoueur idJoueur) throws JoueurAPasJoueException {
