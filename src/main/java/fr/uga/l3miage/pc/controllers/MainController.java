@@ -37,6 +37,11 @@ public class MainController implements MainEndpoints {
     }
 
     @Override
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
+        gestionDesPartiesService.automatiserStrategie(idPartie, idJoueur, strategie);
+    }
+
+    @Override
     public SseEmitter getHistorique(int idPartie) {
 
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);

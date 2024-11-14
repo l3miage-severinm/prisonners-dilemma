@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.strategies;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.exceptions.rest.JoueurAPasJoueRestExecption;
+import fr.uga.l3miage.pc.exceptions.rest.JoueurAPasJoueRestException;
 import fr.uga.l3miage.pc.exceptions.technical.JoueurAPasJoueException;
 import fr.uga.l3miage.pc.models.Tour;
 
@@ -36,7 +36,7 @@ public class Adaptatif implements SimpleStrategy {
                     nbToursTrahison++;
                 }
             } catch (JoueurAPasJoueException e) {
-                throw new JoueurAPasJoueRestExecption("Un joueur n'a pas joué le tour " + tour);
+                throw new JoueurAPasJoueRestException("Un joueur n'a pas joué le tour " + tour);
             }
         }
 

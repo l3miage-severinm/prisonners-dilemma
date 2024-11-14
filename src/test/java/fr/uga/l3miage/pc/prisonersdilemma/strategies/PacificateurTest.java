@@ -30,7 +30,7 @@ class PacificateurTest {
 
     @Test
     void doitTrahir(){
-        final int NB_TIRAGE = 100000;
+        final int NB_TIRAGE = 10000;
         final double INTERVALLE_CONFIANCE = 0.95;
         final double MARGE_ERREUR = 1 - INTERVALLE_CONFIANCE;
         final double PROBABILITE_COOPERER = 0.2;

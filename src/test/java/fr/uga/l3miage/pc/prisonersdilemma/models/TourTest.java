@@ -6,6 +6,7 @@ import fr.uga.l3miage.pc.models.Tour;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TourTest {
 
@@ -77,4 +78,10 @@ class TourTest {
         assertThat(tour.getScore(EnumIdJoueur.MILOU)).isZero();
     }
 
+    @Test
+    void getScoreJoueurAPasJoue() {
+        Tour tour = new Tour();
+        assertThrows(JoueurAPasJoueException.class, () -> tour.getScore(EnumIdJoueur.TINTIN));
+        assertThrows(JoueurAPasJoueException.class, () -> tour.getScore(EnumIdJoueur.MILOU));
+    }
 }

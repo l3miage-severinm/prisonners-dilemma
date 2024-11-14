@@ -39,10 +39,17 @@ public interface MainEndpoints {
     @GetMapping("/{idPartie}/longueur")
     int getLongueurHistorique(@PathVariable(name = "idPartie") int idPartie);
 
-    // Nouvelle méthode SSE pour l'historique en temps réel
     @Operation(description = "Écouter les mises à jour en temps réel de l'historique de la partie")
     @ApiResponse(responseCode = "200", description = "Mises à jour SSE envoyées")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{idPartie}/historique", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     SseEmitter getHistorique(@PathVariable(name = "idPartie") int idPartie);
+
+    @Operation(description = "Activer une stratégie automatique pour une partie et un joueur donné")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{idPartie}/automatiser/{idJoueur}/{strategie}")
+    void automatiserStrategie(@PathVariable(name = "idPartie") int idPartie,
+                              @PathVariable(name = "idJoueur") EnumIdJoueur idJoueur,
+                              @PathVariable(name = "strategie") EnumStrategie strategie);
 }
