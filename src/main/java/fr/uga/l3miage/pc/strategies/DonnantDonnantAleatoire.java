@@ -11,10 +11,13 @@ public class DonnantDonnantAleatoire implements SimpleStrategy {
 
     @Override
     public boolean doStrategy(Tour[] historique, EnumIdJoueur idJoueur) {
-        if (random.nextInt(100) < 20)
+
+        if(historique.length == 0)
+            return true;
+        else if (random.nextInt(100) < 20)
             return random.nextBoolean();
         else if (idJoueur == EnumIdJoueur.MILOU)
-            return historique[historique.length - 2].getJoueur2Coopere();
+            return historique[historique.length - 1].getJoueur2Coopere();
         else
             return historique[historique.length - 1].getJoueur1Coopere();
     }
