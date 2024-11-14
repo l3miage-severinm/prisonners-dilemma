@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DonnantDonnantAleatoireTest {
+class DonnantDonnantAleatoireTest {
 
     private final SimpleStrategy STRATEGIE = FabriqueStrategie.getInstance().createStrategie(EnumStrategie.DONNANT_DONNANT_ALEATOIRE);
 
