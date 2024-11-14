@@ -14,12 +14,19 @@ import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
 import fr.uga.l3miage.pc.models.Tour;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Sinks;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
 public class GestionDesPartiesService {
 
     private final PartieComponent partieComponent;
+    private final Map<Integer, Sinks.Many<List<Tour>>> partieSinks = new ConcurrentHashMap<>();
 
     public int creerPartie(int nbTours) {
         try {
@@ -29,31 +36,43 @@ public class GestionDesPartiesService {
         }
     }
 
-    public Tour jouerCoup (int numeroPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
+    public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
         try {
-            return partieComponent.jouerCoup(numeroPartie, idJoueur, strategie);
-        }
-        catch (PartieInexistanteException e) {
+            Tour tour = partieComponent.jouerCoup(numeroPartie, idJoueur, strategie);
+            List<Tour> historique = obtenirHistoriquePartie(numeroPartie);
+            partieSinks.computeIfAbsent(numeroPartie, k -> Sinks.many().replay().latest()).tryEmitNext(historique);
+            return tour;
+        } catch (PartieInexistanteException e) {
             throw new PartieInexistanteRestException(e.getMessage());
-        }
-        catch (JoueurADejaJoueException e) {
+        } catch (JoueurADejaJoueException e) {
             throw new JoueurADejaJoueRestException(e.getMessage());
-        }
-        catch (PartieTermineeException e) {
+        } catch (PartieTermineeException e) {
             throw new PartieTermineeRestException(e.getMessage());
         }
     }
 
     public void clearPartiesEnCours() {
         partieComponent.clearPartiesEnCours();
+        partieSinks.clear();
     }
 
-    public int obtenirNbToursPartie(int numeroPartie){
+    public int obtenirNbToursPartie(int numeroPartie) {
         try {
             return partieComponent.getPartieByNumero(numeroPartie).getNbTours();
-        }
-        catch (PartieInexistanteException e) {
+        } catch (PartieInexistanteException e) {
             throw new PartieInexistanteRestException(e.getMessage());
         }
+    }
+
+    public List<Tour> obtenirHistoriquePartie(int numeroPartie) {
+        try {
+            return partieComponent.getPartieByNumero(numeroPartie).getTours();
+        } catch (PartieInexistanteException e) {
+            throw new PartieInexistanteRestException(e.getMessage());
+        }
+    }
+
+    public Flux<List<Tour>> obtenirFluxHistoriquePartie(int numeroPartie) {
+        return partieSinks.computeIfAbsent(numeroPartie, k -> Sinks.many().replay().latest()).asFlux();
     }
 }
