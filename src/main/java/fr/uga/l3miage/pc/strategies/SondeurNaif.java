@@ -11,8 +11,18 @@ public class SondeurNaif implements SimpleStrategy {
 
     @Override
     public boolean doStrategy(Tour[] historique, EnumIdJoueur idJoueur) {
-        return random.nextInt(100) >= 20 && ((idJoueur == EnumIdJoueur.MILOU) ?
-                historique[historique.length - 2].getJoueur2Coopere() :
-                historique[historique.length - 1].getJoueur1Coopere());
+
+        if (historique.length == 0)
+            return true;
+
+        Tour dernierTour = historique[historique.length - 1];
+        boolean dernierCoupAdversaireCoopere = idJoueur == EnumIdJoueur.TINTIN ?
+                dernierTour.getJoueur2Coopere() :
+                dernierTour.getJoueur1Coopere();
+
+        if (dernierCoupAdversaireCoopere && random.nextInt(100) >= 50)  // probabilité de trahir de 1/2
+            return false;
+
+        return dernierCoupAdversaireCoopere;
     }
 }
