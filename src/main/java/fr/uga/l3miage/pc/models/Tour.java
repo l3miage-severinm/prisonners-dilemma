@@ -30,7 +30,7 @@ public class Tour {
             if (joueur1Coopere && !joueur2Coopere) return 5;
             else if (!joueur1Coopere && joueur2Coopere) return 0;
         }
-        if (joueur1Coopere && joueur2Coopere) return 3;
+        if (joueur1Coopere) return 3;
         return 1;
     }
 }

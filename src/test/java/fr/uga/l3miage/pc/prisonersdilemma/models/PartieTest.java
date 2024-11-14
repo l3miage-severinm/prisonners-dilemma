@@ -35,8 +35,8 @@ class PartieTest {
     @Test
     void getScorePartie0Tours() throws JoueurAPasJoueException {
         Partie partie = new Partie(0, 1, new ArrayList<>());
-        assertThat(partie.getScore(EnumIdJoueur.TINTIN)).isEqualTo(0);
-        assertThat(partie.getScore(EnumIdJoueur.MILOU)).isEqualTo(0);
+        assertThat(partie.getScore(EnumIdJoueur.TINTIN)).isZero();
+        assertThat(partie.getScore(EnumIdJoueur.MILOU)).isZero();
     }
 
     @Test
@@ -47,7 +47,7 @@ class PartieTest {
         when(mockTour.getScore(EnumIdJoueur.MILOU)).thenReturn(0);
         partie.getTours().add(mockTour);
         assertThat(partie.getScore(EnumIdJoueur.TINTIN)).isEqualTo(5);
-        assertThat(partie.getScore(EnumIdJoueur.MILOU)).isEqualTo(0);
+        assertThat(partie.getScore(EnumIdJoueur.MILOU)).isZero();
     }
 
     @Test
@@ -66,6 +66,6 @@ class PartieTest {
         partie.getTours().add(mockTour2);
         partie.getTours().add(mockTour3);
         assertThat(partie.getScore(EnumIdJoueur.TINTIN)).isEqualTo(15);
-        assertThat(partie.getScore(EnumIdJoueur.MILOU)).isEqualTo(0);
+        assertThat(partie.getScore(EnumIdJoueur.MILOU)).isZero();
     }
 }

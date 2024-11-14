@@ -66,7 +66,7 @@ class TourTest {
     @Test
     void getScoreTintinCoopereMilouTrahit() throws JoueurAPasJoueException {
         Tour tour = new Tour(true, false);
-        assertThat(tour.getScore(EnumIdJoueur.TINTIN)).isEqualTo(0);
+        assertThat(tour.getScore(EnumIdJoueur.TINTIN)).isZero();
         assertThat(tour.getScore(EnumIdJoueur.MILOU)).isEqualTo(5);
     }
 
@@ -74,7 +74,7 @@ class TourTest {
     void getScoreTintinTrahitMilouCoopere() throws JoueurAPasJoueException {
         Tour tour = new Tour(false, true);
         assertThat(tour.getScore(EnumIdJoueur.TINTIN)).isEqualTo(5);
-        assertThat(tour.getScore(EnumIdJoueur.MILOU)).isEqualTo(0);
+        assertThat(tour.getScore(EnumIdJoueur.MILOU)).isZero();
     }
 
 }
