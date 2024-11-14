@@ -2,10 +2,8 @@ package fr.uga.l3miage.pc.components;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
-import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
+import fr.uga.l3miage.pc.exceptions.rest.PartieAutomatiseeRestException;
+import fr.uga.l3miage.pc.exceptions.technical.*;
 import fr.uga.l3miage.pc.strategies.SimpleStrategy;
 import fr.uga.l3miage.pc.models.Partie;
 import fr.uga.l3miage.pc.models.Tour;
@@ -92,14 +90,9 @@ public class PartieComponent {
     }
 
     public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie)
-            throws PartieInexistanteException {
+            throws PartieInexistanteException, PartieAutomatiseeException {
         Partie partie = getPartieByNumero(idPartie);
         SimpleStrategy strategy = FabriqueStrategie.getInstance().createStrategie(strategie);
-        try {
-            partie.automatiser(idJoueur, strategy);
-        }
-        catch(Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        partie.automatiser(idJoueur, strategy);
     }
 }

@@ -3,14 +3,8 @@ package fr.uga.l3miage.pc.services;
 import fr.uga.l3miage.pc.components.PartieComponent;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
-import fr.uga.l3miage.pc.exceptions.rest.JoueurADejaJoueRestException;
-import fr.uga.l3miage.pc.exceptions.rest.PartieInexistanteRestException;
-import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
-import fr.uga.l3miage.pc.exceptions.rest.PartieTermineeRestException;
-import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
+import fr.uga.l3miage.pc.exceptions.rest.*;
+import fr.uga.l3miage.pc.exceptions.technical.*;
 import fr.uga.l3miage.pc.models.Tour;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -81,6 +75,8 @@ public class GestionDesPartiesService {
             partieComponent.automatiserStrategie(idPartie, idJoueur, strategie);
         } catch (PartieInexistanteException e) {
             throw new PartieInexistanteRestException(e.getMessage());
+        } catch(PartieAutomatiseeException e) {
+            throw new PartieAutomatiseeRestException(e.getMessage());
         }
     }
 }
