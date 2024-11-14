@@ -1,5 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
+import fr.uga.l3miage.pc.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.exceptions.technical.JoueurAPasJoueException;
 import fr.uga.l3miage.pc.models.Tour;
 import org.junit.jupiter.api.Test;
 
@@ -46,4 +48,33 @@ class TourTest {
         Tour tour = new Tour();
         assertThat(tour.estFini()).isFalse();
     }
+
+    @Test
+    void getScoreDeuxCooperent() throws JoueurAPasJoueException {
+        Tour tour = new Tour(true, true);
+        assertThat(tour.getScore(EnumIdJoueur.TINTIN)).isEqualTo(3);
+        assertThat(tour.getScore(EnumIdJoueur.MILOU)).isEqualTo(3);
+    }
+
+    @Test
+    void getScoreDeuxTrahissent() throws JoueurAPasJoueException {
+        Tour tour = new Tour(false, false);
+        assertThat(tour.getScore(EnumIdJoueur.TINTIN)).isEqualTo(1);
+        assertThat(tour.getScore(EnumIdJoueur.MILOU)).isEqualTo(1);
+    }
+
+    @Test
+    void getScoreTintinCoopereMilouTrahit() throws JoueurAPasJoueException {
+        Tour tour = new Tour(true, false);
+        assertThat(tour.getScore(EnumIdJoueur.TINTIN)).isEqualTo(0);
+        assertThat(tour.getScore(EnumIdJoueur.MILOU)).isEqualTo(5);
+    }
+
+    @Test
+    void getScoreTintinTrahitMilouCoopere() throws JoueurAPasJoueException {
+        Tour tour = new Tour(false, true);
+        assertThat(tour.getScore(EnumIdJoueur.TINTIN)).isEqualTo(5);
+        assertThat(tour.getScore(EnumIdJoueur.MILOU)).isEqualTo(0);
+    }
+
 }

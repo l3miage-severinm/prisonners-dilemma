@@ -1,6 +1,7 @@
 package fr.uga.l3miage.pc.strategies;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.exceptions.technical.JoueurAPasJoueException;
 import fr.uga.l3miage.pc.models.Tour;
 
 public class Adaptatif implements SimpleStrategy {
@@ -15,37 +16,31 @@ public class Adaptatif implements SimpleStrategy {
     }
 
     private boolean calculerMeilleurChoix(Tour[] historique, EnumIdJoueur idJoueur) {
-        double scoreCooperation = calculerScoreMoyen(historique, idJoueur, true);
-        double scoreTrahison = calculerScoreMoyen(historique, idJoueur, false);
 
-        return scoreCooperation >= scoreTrahison;
-    }
-
-    private double calculerScoreMoyen(Tour[] historique, EnumIdJoueur idJoueur, boolean coup) {
-        int scoreTotal = 0;
-        int nbCoup = 0;
+        int scoreCooperation = 0;
+        int scoreTrahison = 0;
+        int nbToursCooperation = 0;
+        int nbToursTrahison = 0;
 
         for (Tour tour : historique) {
-            boolean coupEffectue = idJoueur == EnumIdJoueur.TINTIN ? tour.getJoueur1Coopere() : tour.getJoueur2Coopere();
-            boolean coupAdversaire = idJoueur == EnumIdJoueur.TINTIN ? tour.getJoueur2Coopere() : tour.getJoueur1Coopere();
+            try {
+                boolean aCoopere = idJoueur == EnumIdJoueur.TINTIN ? tour.getJoueur1Coopere() : tour.getJoueur2Coopere();
+                int score = tour.getScore(idJoueur);
 
-            int score;
-            if (coupEffectue && coupAdversaire) {
-                score = -2;
-            } else if (!coupEffectue && coupAdversaire) {
-                score = 0;
-            } else if (coupEffectue && !coupAdversaire) {
-                score = -5;
-            } else {
-                score = -4;
-            }
-
-            if (coupEffectue == coup) {
-                scoreTotal += score;
-                nbCoup++;
+                if (aCoopere) {
+                    scoreCooperation += score;
+                    nbToursCooperation++;
+                } else {
+                    scoreTrahison += score;
+                    nbToursTrahison++;
+                }
+            } catch (JoueurAPasJoueException e) {
+                throw new RuntimeException("Un joueur n'a pas joué le tour " + tour);
             }
         }
 
-        return nbCoup > 0 ? (double) scoreTotal / nbCoup : 0;
+        double moyenneCooperation = nbToursCooperation > 0 ? (double) scoreCooperation / nbToursCooperation : 0;
+        double moyenneTrahison = nbToursTrahison > 0 ? (double) scoreTrahison / nbToursTrahison : 0;
+        return moyenneCooperation >= moyenneTrahison;
     }
 }
