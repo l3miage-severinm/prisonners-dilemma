@@ -2,6 +2,7 @@ package fr.uga.l3miage.pc.controllers;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
+import fr.uga.l3miage.pc.exceptions.rest.ConnexionInterrompueRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
 import fr.uga.l3miage.pc.models.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,9 @@ public class MainController implements MainEndpoints {
                     Map<String, Boolean> heartbeat = new HashMap<>();
                     heartbeat.put("heartbeat", true);
                     emitter.send(heartbeat);
+
+                } catch (InterruptedException e){
+                    throw new ConnexionInterrompueRestException("Connexion Interrompue");
                 } catch (Exception e) {
                     emitter.completeWithError(e);
                     break;
