@@ -20,9 +20,8 @@ public class Graduel implements SimpleStrategy {
     private int countAdversaireTrahisons(Tour[] historique, EnumIdJoueur idJoueur) {
         int count = 0;
         for (Tour tour : historique) {
-            if (idJoueur == EnumIdJoueur.TINTIN && Boolean.FALSE.equals(tour.getJoueur2Coopere()))
-                count++;
-            else if (idJoueur == EnumIdJoueur.MILOU && Boolean.FALSE.equals(tour.getJoueur1Coopere()))
+            if (idJoueur == EnumIdJoueur.TINTIN && Boolean.FALSE.equals(tour.getJoueur2Coopere())
+             || idJoueur == EnumIdJoueur.MILOU && Boolean.FALSE.equals(tour.getJoueur1Coopere()))
                 count++;
         }
         return count;

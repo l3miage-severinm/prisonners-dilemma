@@ -3,7 +3,9 @@ package fr.uga.l3miage.pc.strategies;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.models.Tour;
 
-public class utils {
+public class Utils {
+
+    private Utils() {}
 
     protected static boolean getDernierCoupAdversaire(Tour[] historique, EnumIdJoueur idJoueur) {
         return idJoueur == EnumIdJoueur.TINTIN ? historique[historique.length - 1].getJoueur2Coopere()

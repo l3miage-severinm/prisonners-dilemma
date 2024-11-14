@@ -42,7 +42,6 @@ public class MainController implements MainEndpoints {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
         gestionDesPartiesService.obtenirFluxHistoriquePartie(idPartie)
                 .doOnNext(historique -> {
-                    System.out.println("Historique envoyé pour la partie " + idPartie + " : " + historique);
                     try {
                         emitter.send(historique);
                     } catch (Exception e) {

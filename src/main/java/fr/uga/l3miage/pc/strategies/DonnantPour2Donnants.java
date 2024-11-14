@@ -13,8 +13,8 @@ public class DonnantPour2Donnants implements SimpleStrategy {
             return false;
         }
 
-        boolean dernierCoupAdversaire = utils.getDernierCoupAdversaire(historique, idJoueur);
-        boolean avantDernierCoupAdversaire = utils.getAvantDernierCoupAdversaire(historique, idJoueur);
+        boolean dernierCoupAdversaire = Utils.getDernierCoupAdversaire(historique, idJoueur);
+        boolean avantDernierCoupAdversaire = Utils.getAvantDernierCoupAdversaire(historique, idJoueur);
 
         return (dernierCoupAdversaire == avantDernierCoupAdversaire) ?
                 dernierCoupAdversaire :

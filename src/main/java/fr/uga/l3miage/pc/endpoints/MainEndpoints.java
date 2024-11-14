@@ -32,13 +32,6 @@ public interface MainEndpoints {
             @PathVariable(name = "idJoueur") EnumIdJoueur idJoueur,
             @PathVariable(name = "strategie") EnumStrategie strategie);
 
-    //@Operation(description = "Récupérer l'historique d'une partie")
-    //@ApiResponse(responseCode = "200",description = "L'historique des coups de la partie")
-    //@ApiResponse(responseCode = "404", description = "Partie inconnue")
-    //@ResponseStatus(HttpStatus.OK)
-    //@GetMapping("/{idPartie}/historique")
-    //Tour[] getHistorique(@PathVariable(name = "idPartie") int idPartie);
-
     @Operation(description = "Récupérer la longueur d'une partie")
     @ApiResponse(responseCode = "200",description = "Le nombre de coups dans la partie")
     @ApiResponse(responseCode = "404", description = "Partie inconnue")
