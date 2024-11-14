@@ -55,12 +55,21 @@ public class PartieComponent {
         if (idJoueur == EnumIdJoueur.TINTIN) {
             if (tourActuel.joueur1AJoue())
                 throw new JoueurADejaJoueException("Joueur 1 a déjà joué");
+
             tourActuel.setJoueur1Coopere(coup);
+
+            if (partie.estAutomatisee(EnumIdJoueur.MILOU))
+                tourActuel.setJoueur2Coopere(partie.getStrategieMilou().doStrategy(historique, idJoueur));
+
         }
         else {
             if (tourActuel.joueur2AJoue())
                 throw new JoueurADejaJoueException("Joueur 2 a déjà joué");
+
             tourActuel.setJoueur2Coopere(coup);
+
+            if (partie.estAutomatisee(EnumIdJoueur.TINTIN))
+                tourActuel.setJoueur1Coopere(partie.getStrategieTintin().doStrategy(historique, idJoueur));
         }
 
         if (!partie.estFinie() && tourActuel.estFini())
@@ -80,5 +89,17 @@ public class PartieComponent {
 
     public void clearPartiesEnCours() {
         partiesEnCours.clear();
+    }
+
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie)
+            throws PartieInexistanteException {
+        Partie partie = getPartieByNumero(idPartie);
+        SimpleStrategy strategy = FabriqueStrategie.getInstance().createStrategie(strategie);
+        try {
+            partie.automatiser(idJoueur, strategy);
+        }
+        catch(Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

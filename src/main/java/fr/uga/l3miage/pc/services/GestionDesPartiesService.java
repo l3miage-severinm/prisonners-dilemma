@@ -75,4 +75,12 @@ public class GestionDesPartiesService {
     public Flux<List<Tour>> obtenirFluxHistoriquePartie(int numeroPartie) {
         return partieSinks.computeIfAbsent(numeroPartie, k -> Sinks.many().replay().latest()).asFlux();
     }
+
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie){
+        try {
+            partieComponent.automatiserStrategie(idPartie, idJoueur, strategie);
+        } catch (PartieInexistanteException e) {
+            throw new PartieInexistanteRestException(e.getMessage());
+        }
+    }
 }
