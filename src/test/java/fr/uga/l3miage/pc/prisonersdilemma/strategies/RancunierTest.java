@@ -28,9 +28,24 @@ class RancunierTest {
     }
 
     @Test
-    void doitTrahirTest() {
-        final Tour[] historique = new Tour[] { new Tour(false, false) };
-        assertThat(STRATEGIE.doStrategy(historique, EnumIdJoueur.TINTIN)).isFalse();
-        assertThat(STRATEGIE.doStrategy(historique, EnumIdJoueur.MILOU)).isFalse();
+    void doitTrahirTintinTest() {
+        final Tour[] historique1 = new Tour[] { new Tour(true, false) };
+        final Tour[] historique2 = new Tour[] {
+                historique1[0],
+                new Tour(false, true)
+        };
+        assertThat(STRATEGIE.doStrategy(historique1, EnumIdJoueur.TINTIN)).isFalse();
+        assertThat(STRATEGIE.doStrategy(historique2, EnumIdJoueur.TINTIN)).isFalse();
+    }
+
+    @Test
+    void doitTrahirMilouTest() {
+        final Tour[] historique1 = new Tour[] { new Tour(false, true) };
+        final Tour[] historique2 = new Tour[] {
+                historique1[0],
+                new Tour(true, false)
+        };
+        assertThat(STRATEGIE.doStrategy(historique1, EnumIdJoueur.MILOU)).isFalse();
+        assertThat(STRATEGIE.doStrategy(historique2, EnumIdJoueur.MILOU)).isFalse();
     }
 }
