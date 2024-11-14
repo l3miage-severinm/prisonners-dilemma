@@ -8,7 +8,7 @@ public class Adaptatif implements SimpleStrategy {
     @Override
     public boolean doStrategy(Tour[] historique, EnumIdJoueur idJoueur) {
 
-        return historique.length < 5 || (historique.length < 10) ? false : calculerMeilleurChoix(historique, idJoueur);
+        return (historique.length < 5) ? true : (historique.length < 10) ? false : calculerMeilleurChoix(historique, idJoueur);
 
     }
 
