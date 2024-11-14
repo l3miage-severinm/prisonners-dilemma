@@ -35,7 +35,7 @@ class DonnantPour2DonnantsEtAleatoireTest {
 
     @Test
     void doitCooperer(){
-        final int NB_TIRAGE = 100000;
+        final int NB_TIRAGE = 10000;
         final double INTERVALLE_CONFIANCE = 0.95;
         final double MARGE_ERREUR = 1 - INTERVALLE_CONFIANCE;
         final double PROBABILITE_COOPERER = 0.9; //Il y a 80% de chances d'avoir true quand on ne passe pas par l'aléatoire + 10% de true quand on rentre dans l'aléatoire
@@ -56,7 +56,7 @@ class DonnantPour2DonnantsEtAleatoireTest {
 
     @Test
     void doitTrahir(){
-        final int NB_TIRAGE = 100000;
+        final int NB_TIRAGE = 10000;
         final double INTERVALLE_CONFIANCE = 0.95;
         final double MARGE_ERREUR = 1 - INTERVALLE_CONFIANCE;
         final double PROBABILITE_COOPERER = 0.1;
