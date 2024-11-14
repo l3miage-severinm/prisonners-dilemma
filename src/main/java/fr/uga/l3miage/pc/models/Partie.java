@@ -1,13 +1,12 @@
 package fr.uga.l3miage.pc.models;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.technical.JoueurAPasJoueException;
+import fr.uga.l3miage.pc.exceptions.technical.PartieAutomatiseeException;
 import fr.uga.l3miage.pc.strategies.SimpleStrategy;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Timer;
 
 @Data
 public class Partie {
@@ -29,15 +28,15 @@ public class Partie {
         return score;
     }
 
-    public void automatiser(EnumIdJoueur idJoueur, SimpleStrategy strategie) throws Exception {
+    public void automatiser(EnumIdJoueur idJoueur, SimpleStrategy strategie) throws PartieAutomatiseeException {
         if (idJoueur == EnumIdJoueur.TINTIN) {
             if (this.strategieTintin != null)
-                throw new Exception("Tintin a déjà automatisé sa partie");
+                throw new PartieAutomatiseeException("Tintin a déjà automatisé sa partie");
             this.strategieTintin = strategie;
         }
         else {
             if (this.strategieMilou != null)
-                throw new Exception("Milou a déjà automatisé sa partie");
+                throw new PartieAutomatiseeException("Milou a déjà automatisé sa partie");
             this.strategieMilou = strategie;
         }
     }
