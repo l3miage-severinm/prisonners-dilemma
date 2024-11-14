@@ -1,6 +1,6 @@
 package fr.uga.l3miage.pc.enums;
 
-public enum EnumTechniquesAuto {
+public enum EnumStrategie {
     DONNANT_DONNANT,
     DONNANT_DONNANT_ALEATOIRE,
     DONNANT_POUR_2_DONNANTS,
@@ -10,8 +10,8 @@ public enum EnumTechniquesAuto {
     PACIFICATEUR,
     PACIFICATEUR_NAIF,
     ALEATOIRE,
-    TJRS_TRAHIR,
-    TJRS_COOP,
+    TRAHIR,
+    COOPERER,
     RANCUNIER,
     PAVLOV,
     PAVLOV_ALEATOIRE,

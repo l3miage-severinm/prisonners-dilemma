@@ -1,6 +1,7 @@
 package fr.uga.l3miage.pc.controllers;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
 import fr.uga.l3miage.pc.models.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.uga.l3miage.pc.endpoints.MainEndpoints;
 import fr.uga.l3miage.pc.services.GestionDesPartiesService;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class MainController implements MainEndpoints {
@@ -21,13 +27,8 @@ public class MainController implements MainEndpoints {
     }
 
     @Override
-    public Tour jouerCoup(int idPartie, EnumIdJoueur idJoueur, boolean coup) {
-        return gestionDesPartiesService.jouerCoup(idPartie, idJoueur, coup);
-    }
-
-    @Override
-    public Tour[] getHistorique(int idPartie) {
-        return new Tour[0]; // TODO
+    public Tour jouerCoup(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
+        return gestionDesPartiesService.jouerCoup(idPartie, idJoueur, strategie);
     }
 
     @Override
@@ -35,4 +36,43 @@ public class MainController implements MainEndpoints {
         return gestionDesPartiesService.obtenirNbToursPartie(idPartie);
     }
 
+    @Override
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
+        gestionDesPartiesService.automatiserStrategie(idPartie, idJoueur, strategie);
+    }
+
+    @Override
+    public SseEmitter getHistorique(int idPartie) {
+
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        gestionDesPartiesService.obtenirFluxHistoriquePartie(idPartie)
+                .doOnNext(historique -> {
+                    try {
+                        emitter.send(historique);
+                    } catch (Exception e) {
+                        emitter.completeWithError(e);
+                    }
+                })
+                .subscribe();
+
+        sendHeartbeats(emitter);
+        return emitter;
+    }
+
+    private void sendHeartbeats(SseEmitter emitter) {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                    Map<String, Boolean> heartbeat = new HashMap<>();
+                    heartbeat.put("heartbeat", true);
+                    emitter.send(heartbeat);
+
+                } catch (Exception e) {
+                    emitter.completeWithError(e);
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }).start();
+    }
 }

@@ -1,12 +1,13 @@
 package fr.uga.l3miage.pc.components;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.enums.EnumTechniquesAuto;
-import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
+import fr.uga.l3miage.pc.enums.EnumStrategie;
+import fr.uga.l3miage.pc.exceptions.rest.PartieAutomatiseeRestException;
+import fr.uga.l3miage.pc.exceptions.technical.*;
+import fr.uga.l3miage.pc.strategies.SimpleStrategy;
 import fr.uga.l3miage.pc.models.Partie;
 import fr.uga.l3miage.pc.models.Tour;
+import fr.uga.l3miage.pc.strategies.FabriqueStrategie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ import java.util.Set;
 public class PartieComponent {
 
     private final Set<Partie> partiesEnCours;
-    private int numeroPartieSuivante = 0;
+    private int numeroPartieSuivante = 1;
 
     public int creerPartie(int nbTours) throws PartieNbToursIncorrectException {
 
@@ -34,27 +35,45 @@ public class PartieComponent {
         return p.getNumero();
     }
 
-    public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, boolean coopere)
-            throws PartieInexistanteException, JoueurADejaJoueException {
+    public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, EnumStrategie technique)
+            throws PartieInexistanteException, JoueurADejaJoueException, PartieTermineeException {
 
-        List<Tour> tours = getPartieByNumero(numeroPartie).getTours();
+        Partie partie = getPartieByNumero(numeroPartie);
+
+        if (partie.estFinie())
+            throw new PartieTermineeException("La partie n°" + numeroPartie + " est terminée");
+
+        List<Tour> tours = partie.getTours();
         Tour tourActuel = tours.get(tours.size() - 1);
+
+        SimpleStrategy strategie = FabriqueStrategie.getInstance().createStrategie(technique);
+        Tour[] historique = tours.stream().limit(tours.size() - (long)1).toArray(Tour[]::new); // Ignore current Tour
+        boolean coup = strategie.doStrategy(historique, idJoueur);
 
         if (idJoueur == EnumIdJoueur.TINTIN) {
             if (tourActuel.joueur1AJoue())
                 throw new JoueurADejaJoueException("Joueur 1 a déjà joué");
-            tourActuel.setJoueur1Coopere(coopere);
+
+            tourActuel.setJoueur1Coopere(coup);
+
+            if (partie.estAutomatisee(EnumIdJoueur.MILOU))
+                tourActuel.setJoueur2Coopere(partie.getStrategieMilou().doStrategy(historique, idJoueur));
+
         }
         else {
             if (tourActuel.joueur2AJoue())
                 throw new JoueurADejaJoueException("Joueur 2 a déjà joué");
-            tourActuel.setJoueur2Coopere(coopere);
+
+            tourActuel.setJoueur2Coopere(coup);
+
+            if (partie.estAutomatisee(EnumIdJoueur.TINTIN))
+                tourActuel.setJoueur1Coopere(partie.getStrategieTintin().doStrategy(historique, idJoueur));
         }
 
-        if (tourActuel.estFini())
+        if (!partie.estFinie() && tourActuel.estFini())
             tours.add(new Tour());
 
-        return tours.get(partiesEnCours.size() - 1);
+        return tours.get(tours.size() - 1);
     }
 
     public Partie getPartieByNumero(int numero) throws  PartieInexistanteException {
@@ -66,7 +85,14 @@ public class PartieComponent {
         return partieOptional.get();
     }
 
-    public void jeuAutomatique(EnumTechniquesAuto technique) {
-        // TODO implement here
+    public void clearPartiesEnCours() {
+        partiesEnCours.clear();
+    }
+
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie)
+            throws PartieInexistanteException, PartieAutomatiseeException {
+        Partie partie = getPartieByNumero(idPartie);
+        SimpleStrategy strategy = FabriqueStrategie.getInstance().createStrategie(strategie);
+        partie.automatiser(idJoueur, strategy);
     }
 }

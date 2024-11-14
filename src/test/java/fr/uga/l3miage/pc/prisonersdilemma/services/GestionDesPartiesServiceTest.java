@@ -1,9 +1,13 @@
 package fr.uga.l3miage.pc.prisonersdilemma.services;
 
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.rest.JoueurADejaJoueRestException;
+import fr.uga.l3miage.pc.exceptions.rest.PartieInexistanteRestException;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
+import fr.uga.l3miage.pc.exceptions.rest.PartieTermineeRestException;
 import fr.uga.l3miage.pc.services.GestionDesPartiesService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +21,11 @@ class GestionDesPartiesServiceTest {
     @Autowired
     private GestionDesPartiesService gestionDesPartiesService;
 
+    @AfterEach
+    void cleanPartiesEnCours() {
+        gestionDesPartiesService.clearPartiesEnCours();
+    }
+
     @Test
     void creePartieNbTours0Test() {
         assertThrows(PartieNbToursIncorrectRestException.class,
@@ -26,21 +35,31 @@ class GestionDesPartiesServiceTest {
     @Test
     void creePartieNbTours1Test() {
         int numeroPartie = gestionDesPartiesService.creerPartie(1);
-        assertThat(numeroPartie >= 0).isTrue();
+        assertThat(numeroPartie).isNotNegative();
     }
 
-    /* Test buggé, le contexte ne se réinitialise pas entre les tests donc l'historique n'est pas vide lors de l'exécution de ce test
     @Test
     void jouerCoupPartieInexistanteTest() {
         assertThrows(PartieInexistanteRestException.class,
-                () -> gestionDesPartiesService.jouerCoup(0, EnumIdJoueur.UN, true));
-    }*/
+                () -> gestionDesPartiesService.jouerCoup(0, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER));
+    }
 
     @Test
     void jouerCoupDejaJoueTest() {
         int numeroPartie = gestionDesPartiesService.creerPartie(2);
-        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, true);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER);
         assertThrows(JoueurADejaJoueRestException.class,
-                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, false));
+                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumStrategie.TRAHIR));
+    }
+
+    @Test
+    void jouerCoupPartieTermineeTest() {
+        int numeroPartie = gestionDesPartiesService.creerPartie(1);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER);
+        gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.MILOU, EnumStrategie.COOPERER);
+        assertThrows(
+                PartieTermineeRestException.class,
+                () -> gestionDesPartiesService.jouerCoup(numeroPartie, EnumIdJoueur.TINTIN, EnumStrategie.COOPERER)
+        );
     }
 }
