@@ -16,11 +16,9 @@ public class Pacificateur implements SimpleStrategy {
         boolean avantDernierCoupAdversaire = utils.getAvantDernierCoupAdversaire(historique, idJoueur);
 
         if (!dernierCoupAdversaire && !avantDernierCoupAdversaire) {
-            return Math.random() < 0.3;
+            return Math.random() < 0.2;
         }
 
         return true;
     }
-
-
 }
