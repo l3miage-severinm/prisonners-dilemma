@@ -42,7 +42,7 @@ public interface MainEndpoints {
     @Operation(description = "Écouter les mises à jour en temps réel de la partie")
     @ApiResponse(responseCode = "200", description = "Mises à jour SSE envoyées")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/{idPartie}/historique", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/{idPartie}/partie", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     SseEmitter getPartie(@PathVariable(name = "idPartie") int idPartie);
 
     @Operation(description = "Activer une stratégie automatique pour une partie et un joueur donné")

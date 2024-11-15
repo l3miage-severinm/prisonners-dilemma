@@ -22,8 +22,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GestionDesPartiesService {
 
     private final PartieComponent partieComponent;
+    private final PartieMapper partieMapper;
     private final Map<Integer, Sinks.Many<PartieDTO>> partieSinks = new ConcurrentHashMap<>();
-    private final PartieMapper partieMapper ;
+
 
     public int creerPartie(int nbTours) {
         try {
@@ -39,6 +40,7 @@ public class GestionDesPartiesService {
             Tour tour = partieComponent.jouerCoup(numeroPartie, idJoueur, strategie);
 
             PartieDTO partie = obtenirHistoriquePartie(numeroPartie);
+            System.out.print("PARTIE" + partie);
             partieSinks.computeIfAbsent(numeroPartie, k -> Sinks.many().replay().latest()).tryEmitNext(partie);
 
             return tour;
