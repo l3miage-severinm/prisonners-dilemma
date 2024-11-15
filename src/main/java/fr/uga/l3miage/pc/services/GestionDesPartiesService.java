@@ -5,6 +5,8 @@ import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.rest.*;
 import fr.uga.l3miage.pc.exceptions.technical.*;
+import fr.uga.l3miage.pc.mappers.PartieMapper;
+import fr.uga.l3miage.pc.response.PartieDTO;
 import fr.uga.l3miage.pc.models.Tour;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GestionDesPartiesService {
 
     private final PartieComponent partieComponent;
-    private final Map<Integer, Sinks.Many<List<Tour>>> partieSinks = new ConcurrentHashMap<>();
+    private final Map<Integer, Sinks.Many<PartieDTO>> partieSinks = new ConcurrentHashMap<>();
+    private final PartieMapper partieMapper ;
 
     public int creerPartie(int nbTours) {
         try {
@@ -32,10 +35,14 @@ public class GestionDesPartiesService {
 
     public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
         try {
+
             Tour tour = partieComponent.jouerCoup(numeroPartie, idJoueur, strategie);
-            List<Tour> historique = obtenirHistoriquePartie(numeroPartie);
-            partieSinks.computeIfAbsent(numeroPartie, k -> Sinks.many().replay().latest()).tryEmitNext(historique);
+
+            PartieDTO partie = obtenirHistoriquePartie(numeroPartie);
+            partieSinks.computeIfAbsent(numeroPartie, k -> Sinks.many().replay().latest()).tryEmitNext(partie);
+
             return tour;
+
         } catch (PartieInexistanteException e) {
             throw new PartieInexistanteRestException(e.getMessage());
         } catch (JoueurADejaJoueException e) {
@@ -58,15 +65,15 @@ public class GestionDesPartiesService {
         }
     }
 
-    public List<Tour> obtenirHistoriquePartie(int numeroPartie) {
+    public PartieDTO obtenirHistoriquePartie(int numeroPartie) {
         try {
-            return partieComponent.getPartieByNumero(numeroPartie).getTours();
+            return partieMapper.toDto(partieComponent.getPartieByNumero(numeroPartie));
         } catch (PartieInexistanteException e) {
             throw new PartieInexistanteRestException(e.getMessage());
         }
     }
 
-    public Flux<List<Tour>> obtenirFluxHistoriquePartie(int numeroPartie) {
+    public Flux<PartieDTO> obtenirFluxHistoriquePartie(int numeroPartie) {
         return partieSinks.computeIfAbsent(numeroPartie, k -> Sinks.many().replay().latest()).asFlux();
     }
 

@@ -42,13 +42,13 @@ public class MainController implements MainEndpoints {
     }
 
     @Override
-    public SseEmitter getHistorique(int idPartie) {
+    public SseEmitter getPartie(int idPartie) {
 
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
         gestionDesPartiesService.obtenirFluxHistoriquePartie(idPartie)
-                .doOnNext(historique -> {
+                .doOnNext(partie -> {
                     try {
-                        emitter.send(historique);
+                        emitter.send(partie);
                     } catch (Exception e) {
                         emitter.completeWithError(e);
                     }

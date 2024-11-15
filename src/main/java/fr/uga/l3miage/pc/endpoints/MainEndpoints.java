@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequestMapping("/api/dilemne-du-prisonnier")
-@CrossOrigin("http://localhost")
+@CrossOrigin("http://localhost:4200")
 public interface MainEndpoints {
 
     @Operation(description = "Créer une partie (2 joueurs) de dilemne du prisonnier")
@@ -39,11 +39,11 @@ public interface MainEndpoints {
     @GetMapping("/{idPartie}/longueur")
     int getLongueurHistorique(@PathVariable(name = "idPartie") int idPartie);
 
-    @Operation(description = "Écouter les mises à jour en temps réel de l'historique de la partie")
+    @Operation(description = "Écouter les mises à jour en temps réel de la partie")
     @ApiResponse(responseCode = "200", description = "Mises à jour SSE envoyées")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{idPartie}/historique", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    SseEmitter getHistorique(@PathVariable(name = "idPartie") int idPartie);
+    SseEmitter getPartie(@PathVariable(name = "idPartie") int idPartie);
 
     @Operation(description = "Activer une stratégie automatique pour une partie et un joueur donné")
     @ApiResponse(responseCode = "200", description = "OK")
