@@ -1,5 +1,6 @@
 package fr.uga.l3miage.pc.components;
 
+import fr.uga.l3miage.pc.enums.EnumGroupe;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.rest.PartieAutomatiseeRestException;
@@ -89,10 +90,16 @@ public class PartieComponent {
         partiesEnCours.clear();
     }
 
-    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie)
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie, EnumGroupe groupe)
             throws PartieInexistanteException, PartieAutomatiseeException {
+
+        FabriqueStrategie fabriqueStrategie = FabriqueStrategie.getInstance();
+        SimpleStrategy strategy = switch (groupe) {
+            case G17 -> fabriqueStrategie.createStrategie(strategie);
+            case G26 -> fabriqueStrategie.createStrategie_g26(strategie);
+        };
+
         Partie partie = getPartieByNumero(idPartie);
-        SimpleStrategy strategy = FabriqueStrategie.getInstance().createStrategie(strategie);
         partie.automatiser(idJoueur, strategy);
     }
 }

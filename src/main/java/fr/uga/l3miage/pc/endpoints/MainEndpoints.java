@@ -1,5 +1,6 @@
 package fr.uga.l3miage.pc.endpoints;
 
+import fr.uga.l3miage.pc.enums.EnumGroupe;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.models.Tour;
@@ -48,8 +49,9 @@ public interface MainEndpoints {
     @Operation(description = "Activer une stratégie automatique pour une partie et un joueur donné")
     @ApiResponse(responseCode = "200", description = "OK")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{idPartie}/automatiser/{idJoueur}/{strategie}")
+    @GetMapping("/{idPartie}/automatiser/{idJoueur}/{strategie}/groupe/{groupe}")
     void automatiserStrategie(@PathVariable(name = "idPartie") int idPartie,
                               @PathVariable(name = "idJoueur") EnumIdJoueur idJoueur,
-                              @PathVariable(name = "strategie") EnumStrategie strategie);
+                              @PathVariable(name = "strategie") EnumStrategie strategie,
+                                @PathVariable(name = "groupe") EnumGroupe groupe);
 }
