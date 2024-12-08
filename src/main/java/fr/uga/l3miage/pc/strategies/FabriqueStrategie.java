@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.strategies;
 
 import fr.uga.l3miage.pc.enums.EnumStrategie;
-import fr.uga.l3miage.pc.strategies_g26.*;
+import org.dillemaprisonner.ugamiage12024group2_6.strategies.*;
 
 public class FabriqueStrategie {
 
@@ -39,26 +39,27 @@ public class FabriqueStrategie {
         };
     }
 
-    public SimpleStrategy createStrategie_g26(EnumStrategie techniqueAuto) {
-        return switch (techniqueAuto) {
-            case COOPERER -> new Cooperer_g26();
-            case TRAHIR -> new Trahir_g26();
-            case DONNANT_DONNANT -> new DonnantDonnant_g26();
-            case DONNANT_DONNANT_ALEATOIRE -> new DonnantDonnantAleatoire_g26();
-            case DONNANT_POUR_2_DONNANTS -> new DonnantPour2Donnants_g26();
-            case DONNANT_POUR_2_DONNANTS_ET_ALEATOIRE -> new DonnantPour2DonnantsEtAleatoire_g26();
-            case SONDEUR_NAIF -> new SondeurNaif_g26();
-            case SONDEUR_REPENTANT -> new SondeurRepentant_g26();
-            case PACIFICATEUR_NAIF -> new PacificateurNaif_g26();
-            case PACIFICATEUR -> new Pacificateur_g26();
-            case ALEATOIRE -> new Aleatoire_g26();
-            case RANCUNIER -> new Rancunier_g26();
-            case PAVLOV -> new Pavlov_g26();
-            case PAVLOV_ALEATOIRE -> new PavlovAleatoire_g26();
-            case ADAPTATIF -> new Adaptatif_g26();
-            case GRADUEL -> new Graduel_g26();
-            case DONNANT_DONNANT_SOUPCONNEUX -> new DonnantDonnantSoupconneux_g26();
-            case RANCUNIER_DOUX -> new RancunierDoux_g26();
+    public SimpleStrategy createStrategieG26(EnumStrategie techniqueAuto) {
+        Class<? extends Strategy> strategyG26 = switch (techniqueAuto) {
+            case COOPERER -> AlwaysCooperate.class;
+            case TRAHIR -> AlwaysBetray.class;
+            case DONNANT_DONNANT ->  TitForTat.class;
+            case DONNANT_DONNANT_ALEATOIRE ->  TitForTatRandom.class;
+            case DONNANT_POUR_2_DONNANTS ->  TitForTwoTats.class;
+            case DONNANT_POUR_2_DONNANTS_ET_ALEATOIRE ->  TitForTwoTatsRandom.class;
+            case SONDEUR_NAIF ->  NaiveProber.class;
+            case SONDEUR_REPENTANT ->  RemorsefulProber.class;
+            case PACIFICATEUR_NAIF ->  NaivePeacemaker.class;
+            case PACIFICATEUR ->  TruePeacemaker.class;
+            case ALEATOIRE ->  RandomStrategy.class;
+            case RANCUNIER ->  GrimTrigger.class;
+            case PAVLOV ->  org.dillemaprisonner.ugamiage12024group2_6.strategies.Pavlov.class;
+            case PAVLOV_ALEATOIRE ->  PavlovRandom.class;
+            case ADAPTATIF ->  Adaptive.class;
+            case GRADUEL ->  GradualStrategy.class;
+            case DONNANT_DONNANT_SOUPCONNEUX ->  SuspiciousTitForTatStrategy.class;
+            case RANCUNIER_DOUX ->  ForgivingGrudgerStrategy.class;
         };
+        return new StrategyAdapter(strategyG26);
     }
 }
