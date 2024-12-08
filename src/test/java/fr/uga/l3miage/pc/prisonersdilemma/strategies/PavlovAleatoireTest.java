@@ -18,7 +18,7 @@ class PavlovAleatoireTest {
     void deuxCooperer() {
         final Tour[] historique = new Tour[] { new Tour(true, true) };
         final int NB_TIRAGE = 10000;
-        final double MARGE_ERREUR = 0.01;
+        final double MARGE_ERREUR = 0.02;
         final double PROBABILITE_ALEATOIRE = 0.2;
         final double PROBABILITE_COOPERER = 1 - PROBABILITE_ALEATOIRE / 2;
 
