@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequestMapping("/api/dilemne-du-prisonnier")
-@CrossOrigin("http://localhost")
+@CrossOrigin("*")
 public interface MainEndpoints {
 
     @Operation(description = "Créer une partie (2 joueurs) de dilemne du prisonnier")
