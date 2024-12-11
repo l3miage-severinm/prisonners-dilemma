@@ -1,5 +1,6 @@
 package fr.uga.l3miage.pc.controllers;
 
+import fr.uga.l3miage.pc.enums.EnumGroupe;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
@@ -37,8 +38,8 @@ public class MainController implements MainEndpoints {
     }
 
     @Override
-    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie) {
-        gestionDesPartiesService.automatiserStrategie(idPartie, idJoueur, strategie);
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie, EnumGroupe groupe) {
+        gestionDesPartiesService.automatiserStrategie(idPartie, idJoueur, strategie, groupe);
     }
 
     @Override

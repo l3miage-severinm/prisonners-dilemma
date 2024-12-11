@@ -1,6 +1,7 @@
 package fr.uga.l3miage.pc.services;
 
 import fr.uga.l3miage.pc.components.PartieComponent;
+import fr.uga.l3miage.pc.enums.EnumGroupe;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.rest.*;
@@ -70,9 +71,9 @@ public class GestionDesPartiesService {
         return partieSinks.computeIfAbsent(numeroPartie, k -> Sinks.many().replay().latest()).asFlux();
     }
 
-    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie){
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie, EnumGroupe groupe){
         try {
-            partieComponent.automatiserStrategie(idPartie, idJoueur, strategie);
+            partieComponent.automatiserStrategie(idPartie, idJoueur, strategie, groupe);
         } catch (PartieInexistanteException e) {
             throw new PartieInexistanteRestException(e.getMessage());
         } catch(PartieAutomatiseeException e) {

@@ -19,6 +19,19 @@ public class Tour {
 
     public boolean joueur2AJoue() { return joueur2Coopere != null; }
 
+    public boolean getCoopere(EnumIdJoueur joueur) throws JoueurAPasJoueException {
+        return switch (joueur) {
+            case TINTIN -> {
+                if (joueur1AJoue()) yield joueur1Coopere;
+                throw new JoueurAPasJoueException("Tintin n'a pas joué");
+            }
+            case MILOU -> {
+                if (joueur2AJoue()) yield joueur2Coopere;
+                throw new JoueurAPasJoueException("Milou n'a pas joué");
+            }
+        };
+    }
+
     public int getScore(EnumIdJoueur idJoueur) throws JoueurAPasJoueException {
 
         if (!estFini()) throw new JoueurAPasJoueException("Un des joueurs n'a pas joué");

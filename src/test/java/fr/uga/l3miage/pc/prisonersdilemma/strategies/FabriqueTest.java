@@ -37,4 +37,11 @@ class FabriqueTest {
         assertThat(fabrique.createStrategie(EnumStrategie.DONNANT_DONNANT_SOUPCONNEUX)).isInstanceOf(DonnantDonnantSoupconneux.class);
         assertThat(fabrique.createStrategie(EnumStrategie.RANCUNIER_DOUX)).isInstanceOf(RancunierDoux.class);
     }
+
+    @Test
+    void createStrategieG26() {
+        FabriqueStrategie fabrique = FabriqueStrategie.getInstance();
+        for (EnumStrategie enumStrategie : EnumStrategie.values())
+            assertThat(fabrique.createStrategieG26(enumStrategie)).isInstanceOf(StrategyAdapter.class);
+    }
 }
