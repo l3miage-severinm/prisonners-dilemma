@@ -114,6 +114,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.3.4</version>
+                <configuration>
+                    <mainClass>fr.uga.l3miage.pc.PrisonersDilemmaApplication</mainClass>
+                </configuration>
             </plugin>
 
             <!-- Maven Compiler Plugin -->
