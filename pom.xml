@@ -114,9 +114,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.3.4</version>
-                <configuration>
-                    <mainClass>fr.uga.l3miage.pc.PrisonersDilemmaApplication</mainClass>
-                </configuration>
             </plugin>
 
             <!-- Maven Compiler Plugin -->
@@ -129,20 +126,24 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                        <mainClass>fr.uga.l3miage.pc.PrisonersDilemmaApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
             <!-- Surefire Plugin (for tests) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>fr.uga.l3miage.pc.PrisonersDilemmaApplication</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
             </plugin>
 
             <!-- Jacoco Plugin (for code coverage) -->
