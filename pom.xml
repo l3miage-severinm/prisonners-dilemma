@@ -14,11 +14,11 @@
     </properties>
 
     <dependencies>
-        <repository>
-            <id>dilemmaprisonnerugam1miage2024group2_6strategies</id>
-            <name>Code de Hans</name>
-            <url>dilemmaprisonnerugam1miage2024group2_6strategies-1.0-SNAPSHOT.jar</url>
-        </repository>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>dilemmaprisonnerugam1miage2024group2_6strategies</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
