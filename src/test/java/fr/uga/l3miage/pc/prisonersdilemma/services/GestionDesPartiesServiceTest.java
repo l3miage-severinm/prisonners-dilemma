@@ -6,7 +6,7 @@ import fr.uga.l3miage.pc.web.exceptions.rest.JoueurADejaJoueRestException;
 import fr.uga.l3miage.pc.web.exceptions.rest.PartieInexistanteRestException;
 import fr.uga.l3miage.pc.web.exceptions.rest.PartieNbToursIncorrectRestException;
 import fr.uga.l3miage.pc.web.exceptions.rest.PartieTermineeRestException;
-import fr.uga.l3miage.pc.web.GestionDesPartiesService;
+import fr.uga.l3miage.pc.web.services.GestionDesPartiesService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

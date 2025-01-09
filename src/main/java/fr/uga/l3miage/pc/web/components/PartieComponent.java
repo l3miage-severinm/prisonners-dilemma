@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.web;
+package fr.uga.l3miage.pc.web.components;
 
 import fr.uga.l3miage.pc.domain.spi.IPartieComponent;
 import fr.uga.l3miage.pc.domain.enums.EnumGroupe;

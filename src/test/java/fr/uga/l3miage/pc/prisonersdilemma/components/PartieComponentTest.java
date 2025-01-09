@@ -5,7 +5,7 @@ import fr.uga.l3miage.pc.domain.enums.EnumStrategie;
 import fr.uga.l3miage.pc.web.exceptions.technical.JoueurADejaJoueException;
 import fr.uga.l3miage.pc.web.exceptions.technical.PartieInexistanteException;
 import fr.uga.l3miage.pc.web.exceptions.technical.PartieNbToursIncorrectException;
-import fr.uga.l3miage.pc.web.PartieComponent;
+import fr.uga.l3miage.pc.web.components.PartieComponent;
 import fr.uga.l3miage.pc.web.exceptions.technical.PartieTermineeException;
 import fr.uga.l3miage.pc.domain.models.Tour;
 import org.junit.jupiter.api.AfterEach;

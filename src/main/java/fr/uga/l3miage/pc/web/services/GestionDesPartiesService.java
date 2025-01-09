@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.web;
+package fr.uga.l3miage.pc.web.services;
 
 import fr.uga.l3miage.pc.domain.spi.IGestionDesPartiesService;
 import fr.uga.l3miage.pc.domain.spi.IPartieComponent;

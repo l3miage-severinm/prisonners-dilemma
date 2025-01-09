@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.web;
+package fr.uga.l3miage.pc.web.controllers;
 
 import fr.uga.l3miage.pc.domain.enums.EnumGroupe;
 import fr.uga.l3miage.pc.domain.enums.EnumIdJoueur;
