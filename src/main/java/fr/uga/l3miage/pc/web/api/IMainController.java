@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.domain.spi;
+package fr.uga.l3miage.pc.web.api;
 
 import fr.uga.l3miage.pc.domain.enums.EnumGroupe;
 import fr.uga.l3miage.pc.domain.enums.EnumIdJoueur;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RestController
 @RequestMapping("/api/dilemne-du-prisonnier")
 @CrossOrigin("http://localhost")
-public interface MainEndpoints {
+public interface IMainController {
 
     @Operation(description = "Créer une partie (2 joueurs) de dilemne du prisonnier")
     @ApiResponse(responseCode = "200", description = "Partie créée")

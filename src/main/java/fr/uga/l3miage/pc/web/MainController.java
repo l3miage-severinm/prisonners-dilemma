@@ -3,13 +3,13 @@ package fr.uga.l3miage.pc.web;
 import fr.uga.l3miage.pc.domain.enums.EnumGroupe;
 import fr.uga.l3miage.pc.domain.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.domain.enums.EnumStrategie;
+import fr.uga.l3miage.pc.web.api.IMainController;
 import fr.uga.l3miage.pc.web.exceptions.rest.PartieNbToursIncorrectRestException;
 import fr.uga.l3miage.pc.domain.models.Tour;
 import fr.uga.l3miage.pc.domain.spi.IGestionDesPartiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.uga.l3miage.pc.domain.spi.MainEndpoints;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-public class MainController implements MainEndpoints {
+public class MainController implements IMainController {
 
     @Autowired
     private IGestionDesPartiesService gestionDesPartiesService;
