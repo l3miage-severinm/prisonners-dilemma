@@ -5,11 +5,11 @@ import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
 import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
 import fr.uga.l3miage.pc.models.Tour;
+import fr.uga.l3miage.pc.services.IGestionDesPartiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.uga.l3miage.pc.endpoints.MainEndpoints;
-import fr.uga.l3miage.pc.services.GestionDesPartiesService;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class MainController implements MainEndpoints {
 
     @Autowired
-    private GestionDesPartiesService gestionDesPartiesService;
+    private IGestionDesPartiesService gestionDesPartiesService;
 
     @Override
     public int creerPartie(int nbTours) throws PartieNbToursIncorrectRestException {

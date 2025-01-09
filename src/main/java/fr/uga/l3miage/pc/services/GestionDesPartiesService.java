@@ -1,6 +1,6 @@
 package fr.uga.l3miage.pc.services;
 
-import fr.uga.l3miage.pc.components.PartieComponent;
+import fr.uga.l3miage.pc.components.IPartieComponent;
 import fr.uga.l3miage.pc.enums.EnumGroupe;
 import fr.uga.l3miage.pc.enums.EnumIdJoueur;
 import fr.uga.l3miage.pc.enums.EnumStrategie;
@@ -18,9 +18,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
-public class GestionDesPartiesService {
+public class GestionDesPartiesService implements IGestionDesPartiesService {
 
-    private final PartieComponent partieComponent;
+    private final IPartieComponent partieComponent;
     private final Map<Integer, Sinks.Many<List<Tour>>> partieSinks = new ConcurrentHashMap<>();
 
     public int creerPartie(int nbTours) {

@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-public class PartieComponent {
+public class PartieComponent implements IPartieComponent {
 
     private final Set<Partie> partiesEnCours;
     private int numeroPartieSuivante = 1;
