@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.handlers;
 
-import fr.uga.l3miage.pc.exceptions.handlers.JoueurADejaJoueHandler;
-import fr.uga.l3miage.pc.exceptions.rest.JoueurADejaJoueRestException;
+import fr.uga.l3miage.pc.web.exceptions.handlers.JoueurADejaJoueHandler;
+import fr.uga.l3miage.pc.web.exceptions.rest.JoueurADejaJoueRestException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 

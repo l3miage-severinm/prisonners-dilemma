@@ -1,0 +1,105 @@
+package fr.uga.l3miage.pc.web;
+
+import fr.uga.l3miage.pc.domain.spi.IPartieComponent;
+import fr.uga.l3miage.pc.domain.enums.EnumGroupe;
+import fr.uga.l3miage.pc.domain.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.domain.enums.EnumStrategie;
+import fr.uga.l3miage.pc.domain.strategies.SimpleStrategy;
+import fr.uga.l3miage.pc.domain.models.Partie;
+import fr.uga.l3miage.pc.domain.models.Tour;
+import fr.uga.l3miage.pc.domain.strategies.FabriqueStrategie;
+import fr.uga.l3miage.pc.web.exceptions.technical.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+@Component
+@RequiredArgsConstructor
+public class PartieComponent implements IPartieComponent {
+
+    private final Set<Partie> partiesEnCours;
+    private int numeroPartieSuivante = 1;
+
+    public int creerPartie(int nbTours) throws PartieNbToursIncorrectException {
+
+        if (nbTours < 1)
+            throw new PartieNbToursIncorrectException("Le nombre de tours d'une partie doit être strictement supérieur à 0");
+
+        List<Tour> tours = new ArrayList<>();
+        tours.add(new Tour());
+        Partie p = new Partie(numeroPartieSuivante++, nbTours, tours);
+        partiesEnCours.add(p);
+        return p.getNumero();
+    }
+
+    public Tour jouerCoup(int numeroPartie, EnumIdJoueur idJoueur, EnumStrategie technique)
+            throws PartieInexistanteException, JoueurADejaJoueException, PartieTermineeException {
+
+        Partie partie = getPartieByNumero(numeroPartie);
+
+        if (partie.estFinie())
+            throw new PartieTermineeException("La partie n°" + numeroPartie + " est terminée");
+
+        List<Tour> tours = partie.getTours();
+        Tour tourActuel = tours.get(tours.size() - 1);
+
+        SimpleStrategy strategie = FabriqueStrategie.getInstance().createStrategie(technique);
+        Tour[] historique = tours.stream().limit(tours.size() - (long)1).toArray(Tour[]::new); // Ignore current Tour
+        boolean coup = strategie.doStrategy(historique, idJoueur);
+
+        if (idJoueur == EnumIdJoueur.TINTIN) {
+            if (tourActuel.joueur1AJoue())
+                throw new JoueurADejaJoueException("Joueur 1 a déjà joué");
+
+            tourActuel.setJoueur1Coopere(coup);
+
+            if (partie.estAutomatisee(EnumIdJoueur.MILOU))
+                tourActuel.setJoueur2Coopere(partie.getStrategieMilou().doStrategy(historique, idJoueur));
+
+        }
+        else {
+            if (tourActuel.joueur2AJoue())
+                throw new JoueurADejaJoueException("Joueur 2 a déjà joué");
+
+            tourActuel.setJoueur2Coopere(coup);
+
+            if (partie.estAutomatisee(EnumIdJoueur.TINTIN))
+                tourActuel.setJoueur1Coopere(partie.getStrategieTintin().doStrategy(historique, idJoueur));
+        }
+
+        if (!partie.estFinie() && tourActuel.estFini())
+            tours.add(new Tour());
+
+        return tours.get(tours.size() - 1);
+    }
+
+    public Partie getPartieByNumero(int numero) throws  PartieInexistanteException {
+        Optional<Partie> partieOptional = partiesEnCours.stream().filter(p -> p.getNumero() == numero).findFirst();
+
+        if (partieOptional.isEmpty())
+            throw new PartieInexistanteException("Partie n°" + numero + " inexistante");
+
+        return partieOptional.get();
+    }
+
+    public void clearPartiesEnCours() {
+        partiesEnCours.clear();
+    }
+
+    public void automatiserStrategie(int idPartie, EnumIdJoueur idJoueur, EnumStrategie strategie, EnumGroupe groupe)
+            throws PartieInexistanteException, PartieAutomatiseeException {
+
+        FabriqueStrategie fabriqueStrategie = FabriqueStrategie.getInstance();
+        SimpleStrategy strategy = switch (groupe) {
+            case G17 -> fabriqueStrategie.createStrategie(strategie);
+            case G26 -> fabriqueStrategie.createStrategieG26(strategie);
+        };
+
+        Partie partie = getPartieByNumero(idPartie);
+        partie.automatiser(idJoueur, strategy);
+    }
+}

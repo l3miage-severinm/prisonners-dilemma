@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.handlers;
 
-import fr.uga.l3miage.pc.exceptions.handlers.PartieInexistanteHandler;
-import fr.uga.l3miage.pc.exceptions.rest.PartieInexistanteRestException;
+import fr.uga.l3miage.pc.web.exceptions.handlers.PartieInexistanteHandler;
+import fr.uga.l3miage.pc.web.exceptions.rest.PartieInexistanteRestException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 

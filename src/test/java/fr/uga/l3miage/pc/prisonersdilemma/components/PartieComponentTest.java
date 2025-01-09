@@ -1,13 +1,13 @@
 package fr.uga.l3miage.pc.prisonersdilemma.components;
 
-import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.enums.EnumStrategie;
-import fr.uga.l3miage.pc.exceptions.technical.JoueurADejaJoueException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieInexistanteException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieNbToursIncorrectException;
-import fr.uga.l3miage.pc.components.PartieComponent;
-import fr.uga.l3miage.pc.exceptions.technical.PartieTermineeException;
-import fr.uga.l3miage.pc.models.Tour;
+import fr.uga.l3miage.pc.domain.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.domain.enums.EnumStrategie;
+import fr.uga.l3miage.pc.web.exceptions.technical.JoueurADejaJoueException;
+import fr.uga.l3miage.pc.web.exceptions.technical.PartieInexistanteException;
+import fr.uga.l3miage.pc.web.exceptions.technical.PartieNbToursIncorrectException;
+import fr.uga.l3miage.pc.web.PartieComponent;
+import fr.uga.l3miage.pc.web.exceptions.technical.PartieTermineeException;
+import fr.uga.l3miage.pc.domain.models.Tour;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

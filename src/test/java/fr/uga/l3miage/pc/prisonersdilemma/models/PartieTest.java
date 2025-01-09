@@ -1,13 +1,13 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
-import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.enums.EnumStrategie;
-import fr.uga.l3miage.pc.exceptions.technical.JoueurAPasJoueException;
-import fr.uga.l3miage.pc.exceptions.technical.PartieAutomatiseeException;
-import fr.uga.l3miage.pc.models.Partie;
-import fr.uga.l3miage.pc.models.Tour;
-import fr.uga.l3miage.pc.strategies.FabriqueStrategie;
-import fr.uga.l3miage.pc.strategies.SimpleStrategy;
+import fr.uga.l3miage.pc.domain.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.domain.enums.EnumStrategie;
+import fr.uga.l3miage.pc.web.exceptions.technical.JoueurAPasJoueException;
+import fr.uga.l3miage.pc.web.exceptions.technical.PartieAutomatiseeException;
+import fr.uga.l3miage.pc.domain.models.Partie;
+import fr.uga.l3miage.pc.domain.models.Tour;
+import fr.uga.l3miage.pc.domain.strategies.FabriqueStrategie;
+import fr.uga.l3miage.pc.domain.strategies.SimpleStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

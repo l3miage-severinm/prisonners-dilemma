@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.handlers;
 
-import fr.uga.l3miage.pc.exceptions.handlers.PartieNbToursIncorrectHandler;
-import fr.uga.l3miage.pc.exceptions.rest.PartieNbToursIncorrectRestException;
+import fr.uga.l3miage.pc.web.exceptions.handlers.PartieNbToursIncorrectHandler;
+import fr.uga.l3miage.pc.web.exceptions.rest.PartieNbToursIncorrectRestException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 

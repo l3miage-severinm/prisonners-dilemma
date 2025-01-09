@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.handlers;
 
-import fr.uga.l3miage.pc.exceptions.handlers.PartieTermineeHandler;
-import fr.uga.l3miage.pc.exceptions.rest.PartieTermineeRestException;
+import fr.uga.l3miage.pc.web.exceptions.handlers.PartieTermineeHandler;
+import fr.uga.l3miage.pc.web.exceptions.rest.PartieTermineeRestException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 

@@ -1,6 +1,6 @@
 package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
-import fr.uga.l3miage.pc.models.Tour;
+import fr.uga.l3miage.pc.domain.models.Tour;
 
 public class TestHelper {
 

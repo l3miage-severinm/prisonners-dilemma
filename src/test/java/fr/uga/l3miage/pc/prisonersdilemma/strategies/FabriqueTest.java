@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
-import fr.uga.l3miage.pc.enums.EnumStrategie;
-import fr.uga.l3miage.pc.strategies.*;
+import fr.uga.l3miage.pc.domain.enums.EnumStrategie;
+import fr.uga.l3miage.pc.domain.strategies.*;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

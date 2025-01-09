@@ -1,8 +1,8 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
-import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.exceptions.technical.JoueurAPasJoueException;
-import fr.uga.l3miage.pc.models.Tour;
+import fr.uga.l3miage.pc.domain.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.web.exceptions.technical.JoueurAPasJoueException;
+import fr.uga.l3miage.pc.domain.models.Tour;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

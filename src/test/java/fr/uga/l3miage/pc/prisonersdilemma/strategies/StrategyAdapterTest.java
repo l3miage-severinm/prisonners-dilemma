@@ -1,9 +1,8 @@
 package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
-import fr.uga.l3miage.pc.enums.EnumIdJoueur;
-import fr.uga.l3miage.pc.models.Tour;
-import fr.uga.l3miage.pc.strategies.StrategyAdapter;
-import fr.uga.l3miage.pc.strategies.Utils;
+import fr.uga.l3miage.pc.domain.enums.EnumIdJoueur;
+import fr.uga.l3miage.pc.domain.models.Tour;
+import fr.uga.l3miage.pc.domain.strategies.StrategyAdapter;
 import org.dillemaprisonner.ugamiage12024group2_6.strategies.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
